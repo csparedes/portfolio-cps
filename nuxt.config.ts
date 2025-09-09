@@ -8,7 +8,8 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxt/test-utils',
     '@nuxt/ui',
-    '@nuxtjs/color-mode'
+    '@nuxtjs/color-mode',
+    '@nuxt/fonts'
   ],
   css: ['~/assets/css/main.css'],
   colorMode: {
@@ -21,5 +22,25 @@ export default defineNuxtConfig({
     classSuffix: '',
     storage: 'cookie',
     storageKey: 'nuxt-color-mode'
+  },
+  fonts:{
+    // defaults: {
+    //   weights: [400, 700],
+    //   styles: ['normal', 'italic'],
+    //   subsets: [
+    //     'cyrillic-ext',
+    //     'cyrillic',
+    //     'greek-ext',
+    //     'greek',
+    //     'vietnamese',
+    //     'latin-ext',
+    //     'latin',
+    //   ]
+    // },
+    families: [
+      {
+        name: 'Open Sans', provider: 'google'
+      }
+    ]
   }
 })
