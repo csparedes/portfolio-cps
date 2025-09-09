@@ -24,19 +24,6 @@ export default defineNuxtConfig({
     storageKey: 'nuxt-color-mode'
   },
   fonts:{
-    // defaults: {
-    //   weights: [400, 700],
-    //   styles: ['normal', 'italic'],
-    //   subsets: [
-    //     'cyrillic-ext',
-    //     'cyrillic',
-    //     'greek-ext',
-    //     'greek',
-    //     'vietnamese',
-    //     'latin-ext',
-    //     'latin',
-    //   ]
-    // },
     families: [
       {
         name: 'Open Sans', provider: 'google'
