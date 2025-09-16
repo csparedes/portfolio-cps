@@ -9,7 +9,8 @@ export default defineNuxtConfig({
     '@nuxt/test-utils',
     '@nuxt/ui',
     '@nuxtjs/color-mode',
-    '@nuxt/fonts'
+    '@nuxt/fonts',
+    '@nuxt/content'
   ],
   css: ['~/assets/css/main.css'],
   colorMode: {
@@ -23,11 +24,24 @@ export default defineNuxtConfig({
     storage: 'cookie',
     storageKey: 'nuxt-color-mode'
   },
-  fonts:{
+  fonts: {
     families: [
       {
         name: 'Open Sans', provider: 'google'
       }
     ]
+  },
+  content: {
+    // Enable syntax highlighting for code blocks
+    build: {
+      markdown: {
+        highlight: {
+          theme: {
+            default: 'github-light',
+            dark: 'github-dark'
+          }
+        }
+      }
+    }
   }
 })
