@@ -113,15 +113,25 @@
 </template>
 
 <script lang="ts" setup>
-// SEO and meta
+// Enhanced SEO and meta
+const siteUrl = 'https://your-domain.com' // Replace with your actual domain
+const pageUrl = `${siteUrl}/blog`
+const blogTitle = "Blog - Latest Articles and Tutorials"
+const blogDescription = "Discover the latest articles about web development, Vue.js, TypeScript, and modern technologies."
+
 useSeoMeta({
-  title: "Blog - Latest Articles and Tutorials",
-  description:
-    "Discover the latest articles about web development, Vue.js, TypeScript, and modern technologies.",
-  ogTitle: "Blog - Latest Articles and Tutorials",
-  ogDescription:
-    "Discover the latest articles about web development, Vue.js, TypeScript, and modern technologies.",
+  title: blogTitle,
+  description: blogDescription,
+  ogTitle: blogTitle,
+  ogDescription: blogDescription,
   ogType: "website",
+  ogUrl: pageUrl,
+  ogImage: `${siteUrl}/og-blog.jpg`,
+  twitterCard: 'summary_large_image',
+  twitterTitle: blogTitle,
+  twitterDescription: blogDescription,
+  twitterImage: `${siteUrl}/og-blog.jpg`,
+  robots: 'index, follow'
 });
 
 // Reactive state

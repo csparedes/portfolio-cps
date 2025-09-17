@@ -19,6 +19,21 @@
 
     <!-- Blog Post Content -->
     <article v-else class="max-w-4xl mx-auto">
+      <!-- Breadcrumb Navigation -->
+      <nav class="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400 mb-6">
+        <ULink to="/" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+          Home
+        </ULink>
+        <UIcon name="i-heroicons-chevron-right" class="w-4 h-4" />
+        <ULink to="/blog" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+          Blog
+        </ULink>
+        <UIcon name="i-heroicons-chevron-right" class="w-4 h-4" />
+        <span class="text-gray-900 dark:text-gray-100 font-medium truncate max-w-xs">
+          {{ post?.title }}
+        </span>
+      </nav>
+
       <!-- Post Header -->
       <header class="mb-8 flex flex-col gap-4">
         <!-- Category Badge -->
@@ -141,13 +156,11 @@ const { data: adjacentPosts } = await useAsyncData(`adjacent-posts-${slug}`, asy
           !item.id.includes("blog/index.md")
         )
         .map((post: any) => {
-          // Try different ways to access frontmatter properties
           const frontmatter = post.frontmatter || post.meta || post
-
           return {
             ...post,
-            _path: `/blog/${post.id.split("/").pop()?.replace(".md", "")}`, // Convert id to path
-            date: String(frontmatter?.date || post.date || "2024-01-01"), // Try frontmatter first
+            _path: `/blog/${post.id.split("/").pop()?.replace(".md", "")}`,
+            date: String(frontmatter?.date || post.date || "2024-01-01"),
             title: frontmatter?.title || post.title || "Untitled Post"
           }
         })
@@ -192,17 +205,31 @@ const formatDate = (date: string) => {
   })
 }
 
-// SEO Meta tags
+// Enhanced SEO Meta tags with automatic data from frontmatter
 watchEffect(() => {
   if (post.value) {
+    const siteUrl = 'https://your-domain.com' // Replace with your actual domain
+    const postUrl = `${siteUrl}/blog/${slug}`
+    const imageUrl = post.value.image ? `${siteUrl}${post.value.image}` : `${siteUrl}/og-default.jpg`
+
     useSeoMeta({
-      title: post.value.title || 'Blog Post',
-      description: post.value.description || 'Read this blog post',
-      ogTitle: post.value.title || 'Blog Post',
-      ogDescription: post.value.description || 'Read this blog post',
+      title: post.value.title,
+      description: post.value.description,
+      ogTitle: post.value.title,
+      ogDescription: post.value.description,
       ogType: 'article',
-      author: post.value.author,
+      ogUrl: postUrl,
+      ogImage: imageUrl,
+      twitterCard: 'summary_large_image',
+      twitterTitle: post.value.title,
+      twitterDescription: post.value.description,
+      twitterImage: imageUrl,
+      articleAuthor: post.value.author ? [post.value.author] : undefined,
       articlePublishedTime: post.value.date,
+      articleModifiedTime: post.value.date,
+      articleSection: post.value.category,
+      articleTag: post.value.tags || undefined,
+      robots: 'index, follow'
     })
   }
 })
@@ -302,12 +329,24 @@ if (error.value) {
   border-radius: 0.5rem;
   overflow-x: auto;
   margin: 1rem 0;
+  border: 1px solid rgb(229 231 235);
 }
 
 .blog-content :deep(pre code) {
   background-color: transparent;
   padding: 0;
   font-size: 0.875rem;
+  color: inherit;
+}
+
+/* Syntax highlighting support */
+.blog-content :deep(.shiki) {
+  background-color: transparent !important;
+}
+
+.blog-content :deep(.shiki code) {
+  background-color: transparent;
+  color: inherit;
 }
 
 .blog-content :deep(a) {
@@ -378,6 +417,11 @@ if (error.value) {
 
 .dark .blog-content :deep(pre) {
   background-color: rgb(31 41 55);
+  border-color: rgb(55 65 81);
+}
+
+.dark .blog-content :deep(.shiki) {
+  background-color: transparent !important;
 }
 
 .dark .blog-content :deep(strong) {
