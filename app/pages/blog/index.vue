@@ -8,82 +8,42 @@
       </p>
     </div>
 
-    <!-- Filters and Search -->
     <div class="mb-8 space-y-4">
       <div class="flex flex-col sm:flex-row gap-4">
-        <!-- Search -->
         <div class="flex-1">
-          <UInput
-            v-model="searchQuery"
-            placeholder="Search articles..."
-            icon="i-heroicons-magnifying-glass"
-            size="lg"
-          />
+          <UInput v-model="searchQuery" placeholder="Search articles..." icon="i-heroicons-magnifying-glass"
+            size="lg" />
         </div>
-
-        <!-- Sort -->
-        <USelect
-          v-model="sortBy"
-          :items="sortOptions"
-          size="lg"
-          class="w-full sm:w-48"
-        />
+        <USelect v-model="sortBy" :items="sortOptions" size="lg" class="w-full sm:w-48" />
       </div>
 
-      <!-- Category Filter -->
       <div class="flex flex-wrap gap-2">
-        <UButton
-          :variant="selectedCategory === null ? 'solid' : 'outline'"
-          @click="selectedCategory = null"
-          size="sm"
-        >
+        <UButton :variant="selectedCategory === null ? 'solid' : 'outline'" @click="selectedCategory = null" size="sm">
           All Categories
         </UButton>
-        <UButton
-          v-for="category in availableCategories"
-          :key="category"
-          :variant="selectedCategory === category ? 'solid' : 'outline'"
-          @click="selectedCategory = category"
-          size="sm"
-        >
+        <UButton v-for="category in availableCategories" :key="category"
+          :variant="selectedCategory === category ? 'solid' : 'outline'" @click="selectedCategory = category" size="sm">
           {{ category }}
         </UButton>
       </div>
 
-      <!-- Tag Filter -->
       <div class="flex flex-wrap gap-2">
-        <UButton
-          :variant="selectedTag === null ? 'solid' : 'outline'"
-          @click="selectedTag = null"
-          size="sm"
-        >
+        <UButton :variant="selectedTag === null ? 'solid' : 'outline'" @click="selectedTag = null" size="sm">
           All Tags
         </UButton>
-        <UButton
-          v-for="tag in availableTags"
-          :key="tag"
-          :variant="selectedTag === tag ? 'solid' : 'outline'"
-          @click="selectedTag = tag"
-          size="sm"
-        >
+        <UButton v-for="tag in availableTags" :key="tag" :variant="selectedTag === tag ? 'solid' : 'outline'"
+          @click="selectedTag = tag" size="sm">
           #{{ tag }}
         </UButton>
       </div>
     </div>
 
-    <!-- Loading State -->
     <div v-if="pending" class="flex justify-center py-8">
-      <div
-        class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"
-      ></div>
+      <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
     </div>
 
-    <!-- Error State -->
     <div v-else-if="error" class="text-center py-12">
-      <UIcon
-        name="i-heroicons-exclamation-triangle"
-        class="w-16 h-16 mx-auto text-red-400 mb-4"
-      />
+      <UIcon name="i-heroicons-exclamation-triangle" class="w-16 h-16 mx-auto text-red-400 mb-4" />
       <h3 class="text-xl font-semibold mb-2 text-red-600">
         Error Loading Posts
       </h3>
@@ -92,25 +52,14 @@
       </p>
     </div>
 
-    <!-- Blog Posts Grid -->
-    <div
-      v-else-if="!error && paginatedPosts.length > 0"
-      class="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
-    >
-      <UCard
-        v-for="post in paginatedPosts"
-        :key="post._path"
-        variant="subtle"
-        class="hover:shadow-lg transition-shadow duration-200 cursor-pointer"
-        @click="navigateTo(post._path)"
-      >
+    <div v-else-if="!error && paginatedPosts.length > 0" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <UCard v-for="post in paginatedPosts" :key="post._path" variant="subtle"
+        class="hover:shadow-lg transition-shadow duration-200 cursor-pointer" @click="navigateTo(post._path)">
         <template #header>
           <div class="space-y-2">
             <div class="flex justify-between items-start">
-              <span
-                v-if="post.category"
-                class="inline-block px-2 py-1 text-xs font-medium bg-primary/10 text-primary rounded-full"
-              >
+              <span v-if="post.category"
+                class="inline-block px-2 py-1 text-xs font-medium bg-primary/10 text-primary rounded-full">
                 {{ post.category }}
               </span>
               <time class="text-sm text-gray-500 dark:text-gray-400">
@@ -126,10 +75,7 @@
             {{ post.description }}
           </p>
 
-          <div
-            v-if="post.author"
-            class="flex items-center text-sm text-gray-500 dark:text-gray-400"
-          >
+          <div v-if="post.author" class="flex items-center text-sm text-gray-500 dark:text-gray-400">
             <UIcon name="i-heroicons-user" class="w-4 h-4 mr-1" />
             {{ post.author }}
           </div>
@@ -137,17 +83,12 @@
 
         <template #footer>
           <div class="flex flex-wrap gap-1">
-            <span
-              v-for="tag in post.tags?.slice(0, 3)"
-              :key="tag"
-              class="inline-block px-2 py-1 text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded"
-            >
+            <span v-for="tag in post.tags?.slice(0, 3)" :key="tag"
+              class="inline-block px-2 py-1 text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded">
               #{{ tag }}
             </span>
-            <span
-              v-if="post.tags && post.tags.length > 3"
-              class="inline-block px-2 py-1 text-xs text-gray-500 dark:text-gray-400"
-            >
+            <span v-if="post.tags && post.tags.length > 3"
+              class="inline-block px-2 py-1 text-xs text-gray-500 dark:text-gray-400">
               +{{ post.tags.length - 3 }} more
             </span>
           </div>
@@ -155,12 +96,8 @@
       </UCard>
     </div>
 
-    <!-- No Results -->
     <div v-else-if="!error && !pending" class="text-center py-12">
-      <UIcon
-        name="i-heroicons-document-text"
-        class="w-16 h-16 mx-auto text-gray-400 mb-4"
-      />
+      <UIcon name="i-heroicons-document-text" class="w-16 h-16 mx-auto text-gray-400 mb-4" />
       <h3 class="text-xl font-semibold mb-2">No articles found</h3>
       <p class="text-gray-600 dark:text-gray-400 mb-4">
         Try adjusting your search or filter criteria.
@@ -168,16 +105,9 @@
       <UButton @click="clearFilters" variant="outline"> Clear Filters </UButton>
     </div>
 
-    <!-- Pagination -->
     <div v-if="totalPages > 1" class="mt-12 flex justify-center">
-      <UPagination
-        v-model="currentPage"
-        :page-count="postsPerPage"
-        :total="filteredPosts.length"
-        :max="5"
-        show-last
-        show-first
-      />
+      <UPagination v-model="currentPage" :page-count="postsPerPage" :total="filteredPosts.length" :max="5" show-last
+        show-first />
     </div>
   </div>
 </template>
@@ -210,128 +140,84 @@ const sortOptions = [
   { label: "Title Z-A", value: "title-desc" },
 ];
 
-// Simple queryCollection approach
-const {
-  data: posts,
-  pending,
-  error,
-} = await useAsyncData("blog-posts", async () => {
+// Data fetching
+const { data: posts, pending, error } = await useAsyncData("blog-posts", async () => {
   try {
-    // Most basic query possible
     const result = await queryCollection("docs").all();
 
-    if (result && result.length > 0) {
-      // Check what path-related properties exist
-      const sampleItem = result[0];
+    if (!result?.length) return [];
 
-      const blogPosts = result.filter((item) =>
-          item.id &&
-          item.id.includes("blog/") &&
-          !item.id.includes("blog/index.md")
-       );
+    const blogPosts = result.filter((item: any) =>
+      item.id?.includes("blog/") && !item.id.includes("blog/index.md")
+    );
 
-      // Map the posts to include a proper _path for navigation and fix data types
-      const mappedPosts = blogPosts.map((post) => {
-        // Try different ways to access frontmatter properties
-        const frontmatter = post.frontmatter || post.meta || post;
+    return blogPosts.map((post: any) => {
+      const frontmatter = post.frontmatter || post.meta || post;
+      const slug = post.id.split("/").pop()?.replace(".md", "");
 
-        return {
-          ...post,
-          _path: `/blog/${post.id.split("/").pop().replace(".md", "")}`, // Convert id to path
-          date: String(frontmatter?.date || post.date || "2024-01-01"), // Try frontmatter first
-          tags: Array.isArray(frontmatter?.tags || post.tags)
-            ? frontmatter?.tags || post.tags
-            : [], // Try frontmatter first
-          category: frontmatter?.category || post.category || "uncategorized",
-          author: frontmatter?.author || post.author || "Unknown Author",
-          description:
-            frontmatter?.description || post.description || post.title,
-        };
-      });
-
-      // Sort by date (newest first)
-      const sortedPosts = mappedPosts.sort(
-        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-      );
-
-      return sortedPosts;
-    }
-
-    return [];
+      return {
+        ...post,
+        _path: `/blog/${slug}`,
+        date: String(frontmatter?.date || post.date || "2024-01-01"),
+        tags: Array.isArray(frontmatter?.tags || post.tags) 
+          ? frontmatter?.tags || post.tags 
+          : [],
+        category: frontmatter?.category || post.category || "uncategorized",
+        author: frontmatter?.author || post.author || "Unknown Author",
+        description: frontmatter?.description || post.description || post.title,
+      };
+    }).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   } catch (err) {
-    console.error("Simple query error:", err);
+    console.error("Blog posts fetch error:", err);
     return [];
   }
 });
 
-// Handle error state
-if (error.value) {
-  console.error("Blog posts fetch error:", error.value);
-}
-
 // Computed properties for filtering and sorting
 const availableCategories = computed(() => {
   if (!posts.value) return [];
-  const categories = posts.value.map((post) => post.category).filter(Boolean);
+  const categories = posts.value.map((post: any) => post.category).filter(Boolean);
   return [...new Set(categories)].sort();
 });
 
 const availableTags = computed(() => {
   if (!posts.value) return [];
-  const tags = posts.value.flatMap((post) => post.tags || []);
+  const tags = posts.value.flatMap((post: any) => post.tags || []);
   return [...new Set(tags)].sort();
 });
 
 const filteredPosts = computed(() => {
   if (!posts.value) return [];
 
-  // First filter out the index file and ensure we have valid posts
   let filtered = posts.value.filter(
-    (post) => post._path !== "/blog/index" && post.title && post.draft !== true
+    (post: any) => post._path !== "/blog/index" && post.title && !(post as any).draft
   );
 
-  // Apply search filter
   if (searchQuery.value) {
     const query = searchQuery.value.toLowerCase();
-    filtered = filtered.filter(
-      (post) =>
-        post.title?.toLowerCase().includes(query) ||
-        post.description?.toLowerCase().includes(query) ||
-        post.tags?.some((tag: string) => tag.toLowerCase().includes(query))
+    filtered = filtered.filter((post: any) =>
+      post.title?.toLowerCase().includes(query) ||
+      post.description?.toLowerCase().includes(query) ||
+      post.tags?.some((tag: string) => tag.toLowerCase().includes(query))
     );
   }
 
-  // Apply category filter
   if (selectedCategory.value) {
-    filtered = filtered.filter(
-      (post) => post.category === selectedCategory.value
-    );
+    filtered = filtered.filter((post: any) => post.category === selectedCategory.value);
   }
 
-  // Apply tag filter
   if (selectedTag.value) {
-    filtered = filtered.filter((post) =>
-      post.tags?.includes(selectedTag.value)
-    );
+    filtered = filtered.filter((post: any) => post.tags?.includes(selectedTag.value));
   }
 
-  // Apply sorting
-  filtered.sort((a, b) => {
-    switch (sortBy.value) {
-      case "date-desc":
-        return new Date(b.date).getTime() - new Date(a.date).getTime();
-      case "date-asc":
-        return new Date(a.date).getTime() - new Date(b.date).getTime();
-      case "title-asc":
-        return a.title.localeCompare(b.title);
-      case "title-desc":
-        return b.title.localeCompare(a.title);
-      default:
-        return 0;
-    }
-  });
+  const sortFunctions = {
+    "date-desc": (a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+    "date-asc": (a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+    "title-asc": (a: any, b: any) => a.title.localeCompare(b.title),
+    "title-desc": (a: any, b: any) => b.title.localeCompare(a.title),
+  };
 
-  return filtered;
+  return filtered.sort(sortFunctions[sortBy.value as keyof typeof sortFunctions] || (() => 0));
 });
 
 const totalPages = computed(() =>
@@ -344,7 +230,7 @@ const paginatedPosts = computed(() => {
   return filteredPosts.value.slice(start, end);
 });
 
-// Methods
+// Utility functions
 const formatDate = (date: string) => {
   return new Date(date).toLocaleDateString("en-US", {
     year: "numeric",
@@ -371,6 +257,7 @@ watch([searchQuery, selectedCategory, selectedTag, sortBy], () => {
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -378,6 +265,7 @@ watch([searchQuery, selectedCategory, selectedTag, sortBy], () => {
 .line-clamp-3 {
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }

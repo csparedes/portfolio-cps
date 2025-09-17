@@ -2,10 +2,9 @@
 title: "Web Performance Optimization: A Developer's Guide"
 description: "Learn essential techniques for optimizing web application performance, from bundle splitting to image optimization and caching strategies."
 date: 2024-01-20
-author: "Alex Performance"
+author: "Cristian Paredes"
 tags: ["performance", "optimization", "web-development", "javascript"]
 category: "guide"
-image: "/blog/web-performance.jpg"
 draft: false
 ---
 
@@ -25,25 +24,29 @@ Web performance is crucial for user experience and business success. In this gui
 Focus on Google's Core Web Vitals metrics:
 
 ### Largest Contentful Paint (LCP)
+
 Measures loading performance. Aim for LCP to occur within 2.5 seconds.
 
-```javascript
+```ts [file.ts]{2} meta-info=val
 // Optimize LCP with resource hints
 <link rel="preload" href="/hero-image.jpg" as="image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 ```
 
 ### First Input Delay (FID)
+
 Measures interactivity. Aim for FID of less than 100 milliseconds.
 
-```javascript
+```ts
 // Use code splitting to reduce main thread blocking
-const LazyComponent = defineAsyncComponent(() => 
-  import('./components/HeavyComponent.vue')
-)
+const LazyComponent = defineAsyncComponent(
+  () => import("./components/HeavyComponent.vue")
+);
+// It's very helpful use async components
 ```
 
 ### Cumulative Layout Shift (CLS)
+
 Measures visual stability. Aim for CLS of less than 0.1.
 
 ```css
@@ -57,36 +60,39 @@ Measures visual stability. Aim for CLS of less than 0.1.
 ## Bundle Optimization
 
 ### Code Splitting
+
 Split your code into smaller chunks:
 
-```javascript
+```ts
 // Route-based splitting in Nuxt
 const routes = [
   {
-    path: '/dashboard',
-    component: () => import('~/pages/dashboard.vue')
-  }
-]
+    path: "/dashboard",
+    component: () => import("~/pages/dashboard.vue"),
+  },
+];
 
 // Component-based splitting
-const HeavyChart = defineAsyncComponent(() => 
-  import('~/components/HeavyChart.vue')
-)
+const HeavyChart = defineAsyncComponent(
+  () => import("~/components/HeavyChart.vue")
+);
 ```
 
 ### Tree Shaking
+
 Remove unused code from your bundles:
 
-```javascript
+```ts
 // Import only what you need
-import { debounce } from 'lodash-es'
+import { debounce } from "lodash-es";
 // Instead of
-import _ from 'lodash'
+import * as lodash from "lodash";
 ```
 
 ## Image Optimization
 
 ### Modern Formats
+
 Use modern image formats like WebP and AVIF:
 
 ```vue
@@ -102,21 +108,19 @@ Use modern image formats like WebP and AVIF:
 ```
 
 ### Lazy Loading
+
 Implement lazy loading for images:
 
 ```vue
 <template>
-  <NuxtImg
-    src="/image.jpg"
-    loading="lazy"
-    placeholder="/placeholder.jpg"
-  />
+  <NuxtImg src="/image.jpg" loading="lazy" placeholder="/placeholder.jpg" />
 </template>
 ```
 
 ## Caching Strategies
 
 ### HTTP Caching
+
 Set appropriate cache headers:
 
 ```javascript
@@ -124,68 +128,73 @@ Set appropriate cache headers:
 export default defineNuxtConfig({
   nitro: {
     routeRules: {
-      '/api/**': { 
-        headers: { 'Cache-Control': 'max-age=300' } 
+      "/api/**": {
+        headers: { "Cache-Control": "max-age=300" },
       },
-      '/assets/**': { 
-        headers: { 'Cache-Control': 'max-age=31536000' } 
-      }
-    }
-  }
-})
+      "/assets/**": {
+        headers: { "Cache-Control": "max-age=31536000" },
+      },
+    },
+  },
+});
 ```
 
 ### Service Worker Caching
+
 Implement service worker for offline caching:
 
-```javascript
+```ts
 // Use Nuxt PWA module
 export default defineNuxtConfig({
-  modules: ['@vite-pwa/nuxt'],
+  modules: ["@vite-pwa/nuxt"],
   pwa: {
-    strategies: 'generateSW',
+    strategies: "generateSW",
     workbox: {
       runtimeCaching: [
         {
           urlPattern: /^https:\/\/api\./,
-          handler: 'StaleWhileRevalidate',
+          handler: "StaleWhileRevalidate",
           options: {
-            cacheName: 'api-cache',
+            cacheName: "api-cache",
             expiration: {
               maxEntries: 100,
-              maxAgeSeconds: 60 * 60 * 24 // 24 hours
-            }
-          }
-        }
-      ]
-    }
-  }
-})
+              maxAgeSeconds: 60 * 60 * 24, // 24 hours
+            },
+          },
+        },
+      ],
+    },
+  },
+});
 ```
 
 ## Performance Monitoring
 
 ### Web Vitals Tracking
+
 Monitor your Core Web Vitals:
 
-```javascript
-// composables/useWebVitals.js
+```ts
+// composables/useWebVitals.ts
 export function useWebVitals() {
-  const vitals = ref({})
-  
+  const vitals = ref({});
+
   onMounted(async () => {
-    const { getCLS, getFID, getFCP, getLCP, getTTFB } = await import('web-vitals')
-    
-    getCLS(metric => vitals.value.cls = metric.value)
-    getFID(metric => vitals.value.fid = metric.value)
-    getLCP(metric => vitals.value.lcp = metric.value)
-  })
-  
-  return { vitals }
+    const { getCLS, getFID, getFCP, getLCP, getTTFB } = await import(
+      "web-vitals"
+    );
+
+    getCLS((metric) => (vitals.value.cls = metric.value));
+    getFID((metric) => (vitals.value.fid = metric.value));
+    getLCP((metric) => (vitals.value.lcp = metric.value));
+  });
+
+  return { vitals };
 }
 ```
 
 ### Performance Budget
+
 Set performance budgets in your build process:
 
 ```javascript
@@ -196,25 +205,27 @@ export default defineNuxtConfig({
       rollupOptions: {
         output: {
           manualChunks: {
-            vendor: ['vue', 'vue-router'],
-            ui: ['@nuxt/ui']
-          }
-        }
-      }
-    }
-  }
-})
+            vendor: ["vue", "vue-router"],
+            ui: ["@nuxt/ui"],
+          },
+        },
+      },
+    },
+  },
+});
 ```
 
 ## Tools and Resources
 
 ### Performance Testing Tools
+
 - **Lighthouse**: Built into Chrome DevTools
 - **WebPageTest**: Comprehensive performance testing
 - **GTmetrix**: Performance monitoring and analysis
 - **Pingdom**: Website speed testing
 
 ### Development Tools
+
 - **Nuxt DevTools**: Built-in performance insights
 - **Vue DevTools**: Component performance profiling
 - **Bundle Analyzer**: Visualize bundle composition
