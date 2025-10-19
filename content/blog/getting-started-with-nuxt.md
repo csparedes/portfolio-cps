@@ -1,17 +1,26 @@
 ---
 title: "Getting Started with Nuxt 3: A Complete Guide"
-description: "Learn how to build modern web applications with Nuxt 3, covering installation, configuration, and best practices for Vue.js developers."
+description: Learn how to build modern web applications with Nuxt 3, covering
+  installation, configuration, and best practices for Vue.js developers.
 date: 2024-01-15
-author: "John Developer"
-tags: ["nuxt", "vue", "javascript", "web-development"]
-category: "tutorial"
-image: "/blog/nuxt-getting-started.jpg"
+author: John Developer
+tags:
+  - nuxt
+  - vue
+  - javascript
+  - web-development
+category: tutorial
+image: /blog/nuxt-getting-started.jpg
 draft: false
 ---
 
 # Getting Started with Nuxt 3
 
 Nuxt 3 is a powerful full-stack framework built on top of Vue.js that makes building modern web applications a breeze. In this comprehensive guide, we'll explore everything you need to know to get started with Nuxt 3.
+
+# There is other Nuxt version?
+
+Yes, currently at the time there is Nuxt 4 on the running, with a huge ammount of resources, I'll keep this blog up to date util it's possible
 
 ## What is Nuxt 3?
 
@@ -37,7 +46,7 @@ npm install
 
 A typical Nuxt 3 project has the following structure:
 
-```
+```text
 my-nuxt-app/
 ├── assets/          # Uncompiled assets
 ├── components/      # Vue components
