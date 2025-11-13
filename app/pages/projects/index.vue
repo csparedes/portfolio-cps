@@ -1,17 +1,16 @@
 <template>
   <div class="container mx-auto px-4 py-8">
     <div class="mb-8">
-      <h1 class="text-4xl font-bold mb-4">Blog</h1>
+      <h1 class="text-4xl font-bold mb-4">Projects</h1>
       <p class="text-gray-600 dark:text-gray-400">
-        Discover articles about software development, Vue.js, and modern
-        technologies.
+        Developed projects.
       </p>
     </div>
 
     <div class="mb-8 space-y-4">
       <div class="flex flex-col sm:flex-row gap-4">
         <div class="flex-1">
-          <UInput v-model="searchQuery" placeholder="Search articles..." icon="i-heroicons-magnifying-glass"
+          <UInput v-model="searchQuery" placeholder="Search projects..." icon="i-heroicons-magnifying-glass"
             size="lg" />
         </div>
         <USelect v-model="sortBy" :items="sortOptions" size="lg" class="w-full sm:w-48" />
@@ -46,10 +45,10 @@
     <div v-else-if="error" class="text-center py-12">
       <UIcon name="i-heroicons-exclamation-triangle" class="w-16 h-16 mx-auto text-red-400 mb-4" />
       <h3 class="text-xl font-semibold mb-2 text-red-600">
-        Error Loading Posts
+        Error Loading Projects.
       </h3>
       <p class="text-gray-600 dark:text-gray-400">
-        There was an error loading the blog posts. Please try again later.
+        There was an error loading the projects. Please try again later.
       </p>
     </div>
 
@@ -99,7 +98,7 @@
 
     <div v-else-if="!error && !pending" class="text-center py-12">
       <UIcon name="i-heroicons-document-text" class="w-16 h-16 mx-auto text-gray-400 mb-4" />
-      <h3 class="text-xl font-semibold mb-2">No articles found</h3>
+      <h3 class="text-xl font-semibold mb-2">No projects found</h3>
       <p class="text-gray-600 dark:text-gray-400 mb-4">
         Try adjusting your search or filter criteria.
       </p>
@@ -115,10 +114,10 @@
 
 <script lang="ts" setup>
 // Enhanced SEO and meta
-const siteUrl = 'https://your-domain.com' // Replace with your actual domain
-const pageUrl = `${siteUrl}/blog`
-const blogTitle = "Blog - Latest Articles and Tutorials"
-const blogDescription = "Discover the latest articles about web development, Vue.js, TypeScript, and modern technologies."
+const siteUrl = useEnvironment().siteUrl
+const pageUrl = `${siteUrl}/projects`
+const blogTitle = "Projects - Tutorials and projects in development"
+const blogDescription = "Check out my projects, maybe would you like some one"
 
 useSeoMeta({
   title: blogTitle,
@@ -152,55 +151,55 @@ const sortOptions = [
 ];
 
 // Data fetching
-const { data: posts, pending, error } = await useAsyncData("blog-posts", async () => {
+const { data: projects, pending, error } = await useAsyncData("projects-posts", async () => {
   try {
     const result = await queryCollection("docs").all();
 
     if (!result?.length) return [];
 
-    const blogPosts = result.filter((item: any) =>
-      item.id?.includes("blog/") && !item.id.includes("blog/index.md")
+    const projectsPosts = result.filter((item: any) =>
+      item.id?.includes("projects/") && !item.id.includes("projects/index.md")
     );
 
-    return blogPosts.map((post: any) => {
-      const frontmatter = post.frontmatter || post.meta || post;
-      const slug = post.id.split("/").pop()?.replace(".md", "");
+    return projectsPosts.map((project: any) => {
+      const frontmatter = project.frontmatter || project.meta || project;
+      const slug = project.id.split("/").pop()?.replace(".md", "");
 
       return {
-        ...post,
-        _path: `/blog/${slug}`,
-        date: String(frontmatter?.date || post.date || "2024-01-01"),
-        tags: Array.isArray(frontmatter?.tags || post.tags) 
-          ? frontmatter?.tags || post.tags 
+        ...project,
+        _path: `/projects/${slug}`,
+        date: String(frontmatter?.date || project.date || "2024-01-01"),
+        tags: Array.isArray(frontmatter?.tags || project.tags) 
+          ? frontmatter?.tags || project.tags 
           : [],
-        category: frontmatter?.category || post.category || "uncategorized",
-        author: frontmatter?.author || post.author || "Unknown Author",
-        description: frontmatter?.description || post.description || post.title,
+        category: frontmatter?.category || project.category || "uncategorized",
+        author: frontmatter?.author || project.author || "Unknown Author",
+        description: frontmatter?.description || project.description || project.title,
       };
     }).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   } catch (err) {
-    console.error("Blog posts fetch error:", err);
+    console.error("Projects posts fetch error:", err);
     return [];
   }
 });
 
 // Computed properties for filtering and sorting
 const availableCategories = computed(() => {
-  if (!posts.value) return [];
-  const categories = posts.value.map((post: any) => post.category).filter(Boolean);
+  if (!projects.value) return [];
+  const categories = projects.value.map((post: any) => post.category).filter(Boolean);
   return [...new Set(categories)].sort();
 });
 
 const availableTags = computed(() => {
-  if (!posts.value) return [];
-  const tags = posts.value.flatMap((post: any) => post.tags || []);
+  if (!projects.value) return [];
+  const tags = projects.value.flatMap((post: any) => post.tags || []);
   return [...new Set(tags)].sort();
 });
 
 const filteredPosts = computed(() => {
-  if (!posts.value) return [];
+  if (!projects.value) return [];
 
-  let filtered = posts.value.filter(
+  let filtered = projects.value.filter(
     (post: any) => post._path !== "/blog/index" && post.title && !(post as any).draft
   );
 
