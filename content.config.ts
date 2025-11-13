@@ -16,6 +16,35 @@ export default defineContentConfig({
                 draft: z.boolean(),
             }),
         }),
+        projects: defineCollection({
+            type: "page",
+            source: "projects/**/*.md",
+            schema: z.object({
+                title: z.string(),
+                description: z.string(),
+                date: z.string(),
+                author: z.string(),
+                tags: z.array(z.string()),
+                category: z.string(),
+                image: z.string(),
+                draft: z.boolean(),
+                status: z.string()
+            }),
+        }),
+        about: defineCollection({
+            type: "page",
+            source: "about/**/*.md",
+            schema: z.object({
+                title: z.string(),
+                description: z.string(),
+                date: z.string(),
+                author: z.string(),
+                tags: z.array(z.string()),
+                category: z.string(),
+                image: z.string(),
+                draft: z.boolean(),
+            }),
+        }),
         pages: defineCollection({
             type: "page",
             source: "pages/**/*.md",

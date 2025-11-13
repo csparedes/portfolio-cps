@@ -61,34 +61,34 @@ tests/
 
 ### All Tests
 ```bash
-npm run test
+bun run test
 ```
 
 ### Specific Test Categories
 ```bash
 # Unit tests only
-npm run test tests/unit
+bun run test tests/unit
 
 # Integration tests only
-npm run test tests/integration
+bun run test tests/integration
 
 # E2E tests only
-npm run test tests/e2e
+bun run test tests/e2e
 ```
 
 ### Watch Mode
 ```bash
-npm run test --watch
+bun run test --watch
 ```
 
 ### UI Mode
 ```bash
-npm run test:ui
+bun run test:ui
 ```
 
 ### Run Tests Once
 ```bash
-npm run test:run
+bun run test:run
 ```
 
 ## Test Configuration
@@ -178,12 +178,12 @@ Tests are designed to run in CI environments and include:
 
 Run tests with debug output:
 ```bash
-DEBUG=1 npm run test
+DEBUG=1 bun run test
 ```
 
 ### Verbose Output
 
 Get detailed test output:
 ```bash
-npm run test -- --reporter=verbose
+bun run test -- --reporter=verbose
 ```
