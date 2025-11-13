@@ -1,10 +1,14 @@
 ---
-title: "Nuxt Content Components Demo"
-description: "Demonstration of custom components available in Nuxt Content markdown files"
+title: Nuxt Content Components Demo
+description: Demonstration of custom components available in Nuxt Content markdown files
 date: 2024-01-25
-author: "Content Team"
-tags: ["nuxt", "content", "components", "demo"]
-category: "demo"
+author: Content Team
+tags:
+  - nuxt
+  - content
+  - components
+  - demo
+category: demo
 draft: false
 ---
 
@@ -16,19 +20,19 @@ This post demonstrates the custom components available in our Nuxt Content setup
 
 You can use different types of alerts in your content:
 
-::ProseAlert{type="info" title="Information"}
+::prose-alert{title="Information" type="info"}
 This is an informational alert. Use it to highlight important information.
 ::
 
-::ProseAlert{type="warning" title="Warning"}
+::prose-alert{title="Warning" type="warning"}
 This is a warning alert. Use it to warn users about potential issues.
 ::
 
-::ProseAlert{type="error" title="Error"}
+::prose-alert{title="Error" type="error"}
 This is an error alert. Use it to highlight critical issues or errors.
 ::
 
-::ProseAlert{type="success" title="Success"}
+::prose-alert{title="Success" type="success"}
 This is a success alert. Use it to confirm successful operations.
 ::
 
@@ -36,7 +40,7 @@ This is a success alert. Use it to confirm successful operations.
 
 Use callouts to highlight key insights or tips:
 
-::ProseCallout{title="Pro Tip"}
+::prose-callout{title="Pro Tip"}
 This is a callout component that draws attention to important tips or insights. It's perfect for highlighting best practices or key takeaways.
 ::
 
@@ -44,7 +48,13 @@ This is a callout component that draws attention to important tips or insights. 
 
 Images are automatically optimized using @nuxt/image:
 
-::ProseImg{src="/blog/nuxt-getting-started.jpg" alt="Nuxt.js Getting Started" width="800" height="400"}
+::prose-img
+---
+alt: Nuxt.js Getting Started
+height: "400"
+src: /blog/nuxt-getting-started.jpg
+width: "800"
+---
 ::
 
 ## Code Blocks with Enhanced Features
@@ -112,14 +122,14 @@ All standard markdown features work as expected:
 
 | Feature             | Status | Notes                            |
 | ------------------- | ------ | -------------------------------- |
-| Syntax Highlighting | ✅     | Multiple languages supported     |
-| Custom Components   | ✅     | Alert, Callout, Image components |
-| Image Optimization  | ✅     | Automatic WebP conversion        |
-| Dark Mode           | ✅     | Full dark mode support           |
+| Syntax Highlighting | ✅      | Multiple languages supported     |
+| Custom Components   | ✅      | Alert, Callout, Image components |
+| Image Optimization  | ✅      | Automatic WebP conversion        |
+| Dark Mode           | ✅      | Full dark mode support           |
 
 ### Links and Emphasis
 
-You can use [links](https://nuxt.com), **bold text**, _italic text_, and `inline code`
+You can use [links](https://nuxt.com), **bold text**, *italic text*, and `inline code`
 
 ---
 
