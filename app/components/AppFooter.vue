@@ -40,6 +40,12 @@ const footer = reactive({
       target: "_blank",
       "aria-label": "Nuxt UI on GitHub",
     },
+    {
+      icon: "skill-icons:gmail-light",
+      to: "mailto:csparedes1995@gmail.com",
+      target: "_blank",
+      "aria-label": "Email csparedes1995@gmail.com",
+    },
   ],
 });
 </script>

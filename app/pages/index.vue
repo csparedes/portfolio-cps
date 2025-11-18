@@ -44,7 +44,7 @@
         <CardWorkExp
           title="Pontificia Universidad Católica del Ecuador - Ibarra"
           role="System Analist, Fullstack Developer"
-          dateWork="April 2022 - Current"
+          date-work="April 2022 - Current"
           description="The Pontifical Catholic University of Ecuador - Ibarra is a renowned university in Ecuador, focused on education in values and the social and personal transformation of society. I currently work on academic software projects related to students, professors, and administrative staff, helping to automate their processes and streamline transactions."
           stack="Vue, Nuxt, Postgres, Oracle, Docker, Jenkins"
         />
@@ -52,7 +52,7 @@
         <CardWorkExp
           title="Soluciones Tecnológicas Kauel - Remote, Chile"
           role="Fullstack Developer"
-          dateWork="November 2022 - April 2024"
+          date-work="November 2022 - April 2024"
           description="Kauel Unique Solutions is a Chilean technology consulting firm
             specializing in business solutions. During my time there, I led the
             development of complex web applications for clients in the oil and
@@ -63,7 +63,7 @@
         <CardWorkExp 
           title="Intern: GAD Tulcán - Ecuador"
           role="Intern: Database Manager Assistance"
-          dateWork="January 2021 – March 2021"
+          date-work="January 2021 – March 2021"
           description="The decentralized autonomous government of the city of Tulcán in Ecuador is a mayor's office responsible for administering all the services required by the city. During my internship, I assisted the Database Administrator of the Department of Popular Economy and Sustainable Development in gathering information on the city's markets for the creation of a consolidated database."
           stack="Sql, MS Excel, Mysql"
         />
@@ -71,7 +71,7 @@
         <CardWorkExp 
           title="Intern: Pontificia Universidad Católica del Ecuador - Ibarra"
           role="Intern: IT Support and Virtualization"
-          dateWork="May 2019 – March 2020"
+          date-work="May 2019 – March 2020"
           description="As a student, I had the opportunity to intern in the infrastructure department at the Pontificia Universidad Católica del Ecuador Ibarra, where I assisted in the server virtualization process. This process includes everything from installing physical servers and configuring operating systems to routing and startup, in accordance with infrastructure guidelines."
           stack="oVirt, Virtual Box, VmWare, Linux, Red Hat"
         />

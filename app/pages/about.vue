@@ -2,7 +2,7 @@
   <div class="container mx-auto px-4 py-8">
     <!-- Loading State -->
     <div v-if="pending" class="flex justify-center py-12">
-      <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+      <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"/>
     </div>
 
     <!-- Error State (404) -->
@@ -12,17 +12,14 @@
       <p class="text-gray-600 dark:text-gray-400 mb-6">
         The project post you're looking for doesn't exist or has been moved.
       </p>
-      <UButton @click="navigateTo('/projects')" variant="outline">
+      <UButton variant="outline" @click="navigateTo('/projects')" >
         Back to Projects
       </UButton>
     </div>
 
     <!-- Blog Post Content -->
     <article v-else class="max-w-4xl mx-auto">
-      <!-- Breadcrumb Navigation -->
       
-
-      <!-- Post Header -->
       
 
       <div class="mb-8" />
@@ -64,26 +61,6 @@ const { data: about, pending, error } = await useAsyncData(`about`, async () => 
   }
 })
 
-// Calculate estimated reading time
-const readingTime = computed(() => {
-  if (!about.value?.body) return 1
-  const wordsPerMinute = 200
-  // Convert body to string if it's not already
-  const bodyText = typeof about.value.body === 'string'
-    ? about.value.body
-    : JSON.stringify(about.value.body)
-  const wordCount = bodyText.split(/\s+/).length
-  return Math.ceil(wordCount / wordsPerMinute)
-})
-
-// Format date helper
-const formatDate = (date: string) => {
-  return new Date(date).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  })
-}
 
 // Enhanced SEO Meta tags with automatic data from frontmatter
 watchEffect(() => {
