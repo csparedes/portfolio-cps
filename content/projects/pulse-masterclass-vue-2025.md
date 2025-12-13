@@ -13,11 +13,11 @@ description: This is a project based on a masterclass vue, with a custom
 seo:
   title: Pulse App
 author: Cristian Paredes
+status: on-deploy
+category: Web app
+date: 13/12/2025
 ---
 
-# Pulse Masterclass Vue 2025 page
-
-````mdc
 # Pulse - Vue.js Masterclass 2025
 
 A comprehensive Vue 3 project management application built as part of the Vue.js Masterclass 2025 course. Pulse demonstrates modern Vue 3 patterns, state management with Pinia, real-time database integration with Supabase, and advanced performance optimizations.
@@ -44,12 +44,14 @@ Pulse is a full-featured task and project management application that showcases 
 ### Core Functionality
 
 #### 1. **User Authentication & Profiles**
+
 - Email-based sign up and sign in with Supabase Auth
 - User profile management with avatar support
 - Session tracking and persistent authentication
 - Profile persistence and user identity validation
 
 #### 2. **Project Management**
+
 - Create, read, update projects with slug-based routing
 - Project descriptions and metadata
 - Collaborative project support with multiple collaborators
@@ -57,6 +59,7 @@ Pulse is a full-featured task and project management application that showcases 
 - In-place project name editing with automatic slug generation
 
 #### 3. **Task Management**
+
 - Full CRUD operations for tasks
 - Task status tracking and updates
 - Task-to-project associations
@@ -65,12 +68,14 @@ Pulse is a full-featured task and project management application that showcases 
 - In-place task editing with real-time updates
 
 #### 4. **Collaboration Features**
+
 - Manage project and task collaborators
 - Display collaborator avatars and profiles
 - Profile browsing by username
 - Grouped collaborator data fetching with optimization
 
 #### 5. **User Profiles & Discovery**
+
 - Public user profile pages
 - Profile viewing by username
 - Display user-specific tasks and information
@@ -78,23 +83,27 @@ Pulse is a full-featured task and project management application that showcases 
 ### Advanced Features
 
 #### **Real-time Data Synchronization**
+
 - Supabase real-time subscriptions
 - Optimistic UI updates
 - Data validation and cache management
 
 #### **Smart Loading & Caching**
+
 - Memoized query results using `@vueuse/core` `useMemoize`
 - Cache validation to prevent stale data
 - Null state management during data fetching
 - Network error handling and recovery
 
 #### **Error Handling**
+
 - Centralized error store with Pinia
 - Development and production error sections
 - User-friendly error messages
 - Global error capture with `onErrorCaptured` lifecycle hook
 
 #### **Toast Notifications**
+
 - Custom composable-based toast system
 - Success, error, and info notification types
 - Duration-based auto-dismiss
@@ -113,6 +122,7 @@ The application uses a modular Pinia store architecture with separate stores for
 - **tasks-store** (loader): Manages task queries with the same optimization pattern
 
 **Store Optimizations:**
+
 - Memoized query functions prevent redundant database calls
 - Cache validation compares returned data with stored state
 - Automatic cache invalidation and refresh mechanisms
@@ -139,17 +149,20 @@ The application leverages Vue 3's `<Suspense>` component for elegant async handl
 ### Supabase Integration
 
 #### Database Schema
+
 - **profiles**: User information with authentication link
 - **projects**: Project metadata with collaborator arrays
 - **tasks**: Task details with project associations and collaborators
 
 #### Query Patterns
+
 - Typed queries using Supabase `QueryData` for full type safety
 - Relationship queries with `.select()` for nested data
 - Condition filtering with `.eq()` and `.in()`
 - Single/multiple row operations with `.single()` option
 
 #### Client Initialization
+
 ```typescript
 const supabase = createClient<Database>(
   import.meta.env.VITE_SUPABASE_URL,
@@ -160,22 +173,26 @@ const supabase = createClient<Database>(
 ### Composables
 
 #### **useCollabs**
+
 - Fetches collaborator profiles by user IDs
 - Groups collaborators for multiple items
 - Returns typed collaborator data with avatars and profiles
 
 #### **useToast**
+
 - Manages toast notifications
 - Supports different notification types
 - Composable for adding notifications throughout the app
 
 #### **useFormErrors**
+
 - Handles form validation errors
 - Provides error state management for forms
 
 ### Auto-Imports & Plugin Configuration
 
 The project uses `unplugin-auto-import` and `unplugin-vue-components` for:
+
 - Automatic Vue API imports (ref, computed, watch, etc.)
 - Vue Router auto imports (useRouter, useRoute, etc.)
 - Pinia store auto imports
@@ -207,7 +224,8 @@ npm install
 ### Environment Variables
 
 Create a `.env.local` file with:
-```
+
+```text
 VITE_SUPABASE_URL=your_supabase_url
 VITE_SUPABASE_KEY=your_supabase_anon_key
 ```
@@ -271,6 +289,7 @@ Lints and auto-fixes code with ESLint.
 The project development follows a structured commit history:
 
 ### Recent Commits (Release Branch)
+
 - **f6a893a**: Refactor Supabase client initialization and remove commented code
 - **77878bf**: Add example environment variable values
 - **797c8f9**: Streamline task/project loading logic, enhance toast notifications
@@ -278,6 +297,7 @@ The project development follows a structured commit history:
 - **a63cb0f**: Refactor TanStack form dependencies
 
 ### Feature Development
+
 - **9f6c938**: Update dependencies and enhance task creation form
 - **34a1c90**: Fix adjustments in all pages
 - **5a72b46**: Add custom toast, spinner, and icon enhancements
@@ -292,6 +312,7 @@ The project development follows a structured commit history:
 - **3ac91ab**: Supabase backend setup complete
 
 ### Development Philosophy
+
 - Incremental feature development with clear commit messages
 - Refactoring and optimization improvements
 - Dependency management and updates
@@ -299,7 +320,7 @@ The project development follows a structured commit history:
 
 ## File Structure
 
-```
+```text
 src/
 ├── components/
 │   ├── app/              # App-specific components (edit, input, status)
@@ -349,10 +370,12 @@ src/
 ### Browser DevTools
 
 **Chromium-based browsers (Chrome, Edge, Brave):**
+
 - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
 - [Enable Custom Object Formatter](http://bit.ly/object-formatters)
 
 **Firefox:**
+
 - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
 - [Enable Custom Object Formatter](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
 
@@ -372,4 +395,3 @@ This project uses TypeScript with full type support for Vue components. Type inf
 - [Supabase Documentation](https://supabase.com/docs)
 - [Tailwind CSS Documentation](https://tailwindcss.com/)
 - [Vue Router Documentation](https://router.vuejs.org/)
-````
