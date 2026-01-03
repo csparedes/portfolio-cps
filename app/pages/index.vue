@@ -14,14 +14,6 @@
       </div>
     </div>
 
-    <div class="p-8">
-      <h1 class="text-left p-1">
-        Have a look on my projects
-        <NuxtLink to="/projects" class="font-bold">here</NuxtLink>
-      </h1>
-      <CarrouselImg :images="images" />
-    </div>
-
     <div class="text-left p-1 md:p-8">
       <h1 class="text-xl font-bold pb-4">About me</h1>
       <p>
@@ -36,6 +28,17 @@
         environments. Seeking to contribute to innovative projects that drive
         technological growth within organizations.
       </p>
+      <p>
+        Have an idea?, you can send me an
+        <NuxtLink
+          icon="skill-icons:gmail-light"
+           class="underline"
+          to="mailto:csparedes1995@gmail.com"
+          target="_blank"
+          aria-label="Email csparedes1995@gmail.com"
+          >email.</NuxtLink
+        >
+      </p>
     </div>
     <div class="p-8">
       <h3 class="text-left font-bold text-xl pb-4">Work experience</h3>
@@ -48,7 +51,7 @@
           description="The Pontifical Catholic University of Ecuador - Ibarra is a renowned university in Ecuador, focused on education in values and the social and personal transformation of society. I currently work on academic software projects related to students, professors, and administrative staff, helping to automate their processes and streamline transactions."
           stack="Vue, Nuxt, Postgres, Oracle, Docker, Jenkins"
         />
-        
+
         <CardWorkExp
           title="Soluciones Tecnológicas Kauel - Remote, Chile"
           role="Fullstack Developer"
@@ -60,7 +63,7 @@
           stack="React, Nodejs, Figma, Azure, Sql Server, Postgres"
         />
 
-        <CardWorkExp 
+        <CardWorkExp
           title="Intern: GAD Tulcán - Ecuador"
           role="Intern: Database Manager Assistance"
           date-work="January 2021 – March 2021"
@@ -68,15 +71,20 @@
           stack="Sql, MS Excel, Mysql"
         />
 
-        <CardWorkExp 
+        <CardWorkExp
           title="Intern: Pontificia Universidad Católica del Ecuador - Ibarra"
           role="Intern: IT Support and Virtualization"
           date-work="May 2019 – March 2020"
           description="As a student, I had the opportunity to intern in the infrastructure department at the Pontificia Universidad Católica del Ecuador Ibarra, where I assisted in the server virtualization process. This process includes everything from installing physical servers and configuring operating systems to routing and startup, in accordance with infrastructure guidelines."
           stack="oVirt, Virtual Box, VmWare, Linux, Red Hat"
         />
-
-        
+      </div>
+      <div class="p-8">
+        <h1 class="text-left p-1">
+          Have a look on my projects
+          <NuxtLink to="/projects" class="font-bold">here</NuxtLink>
+        </h1>
+        <CarrouselImg :images="images" />
       </div>
     </div>
   </div>
