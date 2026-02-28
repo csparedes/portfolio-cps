@@ -1,0 +1,7 @@
+{
+  "workbench.colorCustomizations": {
+    "titleBar.activeBackground": "#631d1daa",
+    "titleBar.activeForeground": "#f0d5d5aa"
+  },
+  "terminal.integrated.fontSize": 10
+}
