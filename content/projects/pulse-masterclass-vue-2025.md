@@ -13,7 +13,7 @@ image: /sdv-1.png
 author: Cristian Paredes
 status: deployed
 category: Web app
-date: 13/12/2024
+date: 2025-12-13
 ---
 
 # Pulse - Vue.js Masterclass 2025
