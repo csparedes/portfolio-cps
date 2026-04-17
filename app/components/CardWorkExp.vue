@@ -9,9 +9,7 @@
               <span class="text-sm font-light">{{ dateWork }}</span>
             </div>
           </template>
-          <ClientOnly >
-            <div class="text-justify">{{ description }}</div>
-          </ClientOnly>
+          <div class="text-justify">{{ description }}</div>
           <template #footer>
             <div class="flex gap-2">
               <span class="font-bold">Stack:</span>

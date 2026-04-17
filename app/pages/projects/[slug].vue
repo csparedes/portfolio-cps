@@ -154,28 +154,28 @@ const { data: adjacentProjects } = await useAsyncData(`adjacent-projects-${slug}
     const allPosts = await queryCollection("projects").all()
 
     if (allPosts && allPosts.length > 0) {
-      const blogPosts = allPosts
+      const projectsAdjacent = allPosts
         .filter((item: any) =>
           item.id &&
-          item.id.includes("blog/") &&
-          !item.id.includes("blog/index.md")
+          item.id.includes("projects/") &&
+          !item.id.includes("projects/index.md")
         )
         .map((post: any) => {
           const frontmatter = post.frontmatter || post.meta || post
           return {
             ...post,
-            _path: `/blog/${post.id.split("/").pop()?.replace(".md", "")}`,
+            _path: `/projects/${post.id.split("/").pop()?.replace(".md", "")}`,
             date: String(frontmatter?.date || post.date || "2024-01-01"),
-            title: frontmatter?.title || post.title || "Untitled Post"
+            title: frontmatter?.title || post.title || "Untitled Project"
           }
         })
         .sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime())
 
-      const currentIndex = blogPosts.findIndex((p: any) => p._path === `/blog/${slug}`)
+      const currentIndex = projectsAdjacent.findIndex((p: any) => p._path === `/projects/${slug}`)
 
       return {
-        previous: currentIndex > 0 ? blogPosts[currentIndex - 1] : null,
-        next: currentIndex < blogPosts.length - 1 ? blogPosts[currentIndex + 1] : null
+        previous: currentIndex > 0 ? projectsAdjacent[currentIndex - 1] : null,
+        next: currentIndex < projectsAdjacent.length - 1 ? projectsAdjacent[currentIndex + 1] : null
       }
     }
 
@@ -190,15 +190,9 @@ const previousPost = computed(() => adjacentProjects.value?.previous)
 const nextPost = computed(() => adjacentProjects.value?.next)
 
 // Calculate estimated reading time
+const { getReadingTime } = useDateFormatter()
 const readingTime = computed(() => {
-  if (!project.value?.body) return 1
-  const wordsPerMinute = 200
-  // Convert body to string if it's not already
-  const bodyText = typeof project.value.body === 'string'
-    ? project.value.body
-    : JSON.stringify(project.value.body)
-  const wordCount = bodyText.split(/\s+/).length
-  return Math.ceil(wordCount / wordsPerMinute)
+  return getReadingTime(project.value?.body)
 })
 
 // Format date helper
@@ -213,8 +207,8 @@ const formatDate = (date: string) => {
 // Enhanced SEO Meta tags with automatic data from frontmatter
 watchEffect(() => {
   if (project.value) {
-    const siteUrl = useEnvironment().siteUrl // Replace with your actual domain
-    const postUrl = `${siteUrl}/blog/${slug}`
+    const siteUrl = useEnvironment().siteUrl
+    const postUrl = `${siteUrl}/projects/${slug}`
     const imageUrl = project.value.image ? `${siteUrl}${project.value.image}` : `${siteUrl}/og-default.jpg`
 
     useSeoMeta({

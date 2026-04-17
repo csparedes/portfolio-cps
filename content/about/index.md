@@ -1,7 +1,7 @@
 ---
 title: Personal Blog
-description: A little about me
 date: 2025-11-15T00:00:00.000Z
+description: A little about me
 draft: false
 ---
 
@@ -15,7 +15,7 @@ My goal is to share what works for me—including the tools I use (like A.I.) an
 
 I'm a fullstack developer dedicated to **building** fast, scalable web and mobile apps with outstanding user **experiences**.
 
-My main stack includes **Vue.js and Nuxt.js** as my front-end strengths, with additional experience in **React and Next.js**. On the back end, I specialize in **NestJS** and also work with **FastAPI (Python)**. For databases, I have experience with **PostgreSQL and MongoDB**.
+My main stack includes **Vue.js and Nuxt.js** as my frontend strengths, with additional experience in **React and Next.js**. On the backend, I specialize in **NestJS** and also work with **FastAPI (Python)**. For databases, I have experience with **PostgreSQL and MongoDB**.
 
 This blog is where I share my coding journey—practical tips on everything from AI tools to clean code practices. I'm all about learning in public and adding value to the dev community.
 

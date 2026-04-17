@@ -115,7 +115,7 @@
 
 <script lang="ts" setup>
 // Enhanced SEO and meta
-const siteUrl = 'https://your-domain.com' // Replace with your actual domain
+const siteUrl = useEnvironment().siteUrl
 const pageUrl = `${siteUrl}/blog`
 const blogTitle = "Blog - Latest Articles and Tutorials"
 const blogDescription = "Discover the latest articles about web development, Vue.js, TypeScript, and modern technologies."
