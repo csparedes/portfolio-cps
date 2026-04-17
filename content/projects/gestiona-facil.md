@@ -1,57 +1,38 @@
 ---
-title: "Gestiona Facil App móvil"
-description: "Mobile app ecosystem, allows store owners to manage inventory from their shops"
+title: "Gestiona Facil App Movil"
+description: "Mobile app ecosystem for store owners to manage inventory and monitor shop performance"
 date: 2022-08-15
 author: "Cristian Paredes"
-tags: ["flutter", "nodejs", "express", "mobile"]
-category: "project"
-image: "/projects/gestiona-facil.jpg"
-draft: false
-status: "offline"
+tags: ["flutter", "nodejs", "express", "typescript", "mobile"]
+category: Mobile App
+status: offline
 ---
-# Gestiona Fácil - Store Management Dashboard
 
-A comprehensive store management application that empowers shop owners to streamline operations and scale their business with ease.
+# Gestiona Facil - Store Management Dashboard
 
-## 🎯 Overview
+A full-stack application helping store owners manage products, control inventory in real-time, and monitor shop performance.
 
-Gestiona Fácil is a full-stack application designed to help store owners efficiently manage their products, control inventory in real-time, and monitor shop performance from a single dashboard.
+## Tech Stack
 
-## 🛠 Tech Stack
+**Frontend:** Flutter - Cross-platform mobile UI
+**Backend:** Node.js + Express + TypeScript
+**Architecture:** RESTful API
 
-**Frontend:**
-- Flutter - Cross-platform mobile and web UI
-- Responsive design for all devices
+## Features
 
-**Backend:**
-- Node.js with Express framework
-- TypeScript for type-safe server code
-- RESTful API architecture
+- **Product Management** - Add, edit, and organize products
+- **Inventory Control** - Real-time stock tracking with low-stock alerts
+- **Shop Dashboard** - Business metrics and shop status
+- **User Authentication** - Secure login with role-based access
 
-## ✨ Key Features
+## Lessons Learned
 
-- **Product Management** - Add, edit, and organize products with detailed information
-- **Inventory Control** - Real-time stock tracking and low-stock alerts
-- **Shop Dashboard** - Monitor business metrics and shop status at a glance
-- **User Authentication** - Secure login and role-based access control
-
-## 🚀 What I Learned
-
-- Building scalable backend services with Express and TypeScript
+- Scalable backend services with Express and TypeScript
 - Cross-platform development with Flutter
 - REST API design and integration
-- Database optimization for inventory management
-- User experience for mobile-first applications
+- Database optimization for inventory systems
+- Mobile-first user experience
 
-## 📸 Screenshots
+## Status
 
-[Add your screenshots here]
-
-## 🔗 Links
-
-- [GitHub Repository](#)
-- [Live Demo](#)
-
----
-
-*Built with Flutter, Node.js, Express, and TypeScript*
+Currently offline - potential for revival with updated tech stack
