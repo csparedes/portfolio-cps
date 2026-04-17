@@ -9,7 +9,7 @@ tags:
   - supabase
 title: Pulse Masterclass Vue 2025
 description: Full-featured task and project management app with Vue 3, Pinia, Supabase, and TanStack libraries
-image: /sdv-1.png
+image: /projects/pulse-app-img.png
 author: Cristian Paredes
 status: deployed
 category: Web app
@@ -83,6 +83,10 @@ npm run lint       # ESLint
 - Cache validation to prevent stale data
 - Lazy component loading with `defineAsyncComponent`
 - Vue 3 `<Suspense>` for async handling
+
+## Screenshots
+
+![Pulse App](/projects/pulse-app-img.png)
 
 ## Learn More
 
