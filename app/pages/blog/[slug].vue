@@ -117,11 +117,12 @@
 </template>
 
 <script lang="ts" setup>
-// Get the slug from the route
+import type { AdjacentPost } from "~/composables/types"
+
 const route = useRoute()
 const slug = route.params.slug as string
+const siteUrl = useEnvironment().siteUrl
 
-// Fetch the blog post
 const { data: post, pending, error } = await useAsyncData(`blog-post-${slug}`, async () => {
   try {
     const result = await queryCollection("blog").path(route.path).first()
@@ -129,7 +130,7 @@ const { data: post, pending, error } = await useAsyncData(`blog-post-${slug}`, a
     if (!result) {
       throw createError({
         statusCode: 404,
-        statusMessage: 'Post not found'
+        statusMessage: "Post not found",
       })
     }
 
@@ -138,39 +139,32 @@ const { data: post, pending, error } = await useAsyncData(`blog-post-${slug}`, a
     console.error("Error fetching blog post:", err)
     throw createError({
       statusCode: 404,
-      statusMessage: 'Post not found'
+      statusMessage: "Post not found",
     })
   }
 })
 
-// Fetch adjacent posts for navigation
 const { data: adjacentPosts } = await useAsyncData(`adjacent-posts-${slug}`, async () => {
   try {
-    const allPosts = await queryCollection("docs").all()
+    const allPosts = await queryCollection("blog").all()
 
     if (allPosts && allPosts.length > 0) {
       const blogPosts = allPosts
-        .filter((item: any) =>
-          item.id &&
-          item.id.includes("blog/") &&
-          !item.id.includes("blog/index.md")
-        )
-        .map((post: any) => {
-          const frontmatter = post.frontmatter || post.meta || post
+        .map((p) => {
+          const postSlug = p.id.split("/").pop()?.replace(".md", "")
           return {
-            ...post,
-            _path: `/blog/${post.id.split("/").pop()?.replace(".md", "")}`,
-            date: String(frontmatter?.date || post.date || "2024-01-01"),
-            title: frontmatter?.title || post.title || "Untitled Post"
-          }
+            _path: `/blog/${postSlug}`,
+            title: p.title,
+            date: p.date,
+          } as AdjacentPost
         })
-        .sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime())
+        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 
-      const currentIndex = blogPosts.findIndex((p: any) => p._path === `/blog/${slug}`)
+      const currentIndex = blogPosts.findIndex((p) => p._path === `/blog/${slug}`)
 
       return {
         previous: currentIndex > 0 ? blogPosts[currentIndex - 1] : null,
-        next: currentIndex < blogPosts.length - 1 ? blogPosts[currentIndex + 1] : null
+        next: currentIndex < blogPosts.length - 1 ? blogPosts[currentIndex + 1] : null,
       }
     }
 
@@ -184,31 +178,11 @@ const { data: adjacentPosts } = await useAsyncData(`adjacent-posts-${slug}`, asy
 const previousPost = computed(() => adjacentPosts.value?.previous)
 const nextPost = computed(() => adjacentPosts.value?.next)
 
-// Calculate estimated reading time
-const readingTime = computed(() => {
-  if (!post.value?.body) return 1
-  const wordsPerMinute = 200
-  // Convert body to string if it's not already
-  const bodyText = typeof post.value.body === 'string'
-    ? post.value.body
-    : JSON.stringify(post.value.body)
-  const wordCount = bodyText.split(/\s+/).length
-  return Math.ceil(wordCount / wordsPerMinute)
-})
+const { formatDate, getReadingTime } = useDateFormatter()
+const readingTime = computed(() => getReadingTime(post.value?.body))
 
-// Format date helper
-const formatDate = (date: string) => {
-  return new Date(date).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  })
-}
-
-// Enhanced SEO Meta tags with automatic data from frontmatter
 watchEffect(() => {
   if (post.value) {
-    const siteUrl = 'https://your-domain.com' // Replace with your actual domain
     const postUrl = `${siteUrl}/blog/${slug}`
     const imageUrl = post.value.image ? `${siteUrl}${post.value.image}` : `${siteUrl}/og-default.jpg`
 
@@ -217,10 +191,10 @@ watchEffect(() => {
       description: post.value.description,
       ogTitle: post.value.title,
       ogDescription: post.value.description,
-      ogType: 'article',
+      ogType: "article",
       ogUrl: postUrl,
       ogImage: imageUrl,
-      twitterCard: 'summary_large_image',
+      twitterCard: "summary_large_image",
       twitterTitle: post.value.title,
       twitterDescription: post.value.description,
       twitterImage: imageUrl,
@@ -229,16 +203,15 @@ watchEffect(() => {
       articleModifiedTime: post.value.date,
       articleSection: post.value.category,
       articleTag: post.value.tags || undefined,
-      robots: 'index, follow'
+      robots: "index, follow",
     })
   }
 })
 
-// Handle 404 errors
 if (error.value) {
   throw createError({
     statusCode: 404,
-    statusMessage: 'Post not found'
+    statusMessage: "Post not found",
   })
 }
 </script>

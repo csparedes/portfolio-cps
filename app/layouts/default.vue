@@ -1,5 +1,5 @@
 <template>
-  <UContainer>
+  <div class="flex flex-col min-h-screen">
     <AppHeader
       :links="[
         {
@@ -24,11 +24,13 @@
         },
       ]"
     />
-    <div class="py-8 px-20">
-      <slot />
-    </div>
+    <main class="flex-1 py-8 px-4 md:px-20">
+      <UContainer>
+        <slot />
+      </UContainer>
+    </main>
     <AppFooter />
-  </UContainer>
+  </div>
 </template>
 
 <script lang="ts" setup></script>

@@ -14,7 +14,7 @@
           <UInput v-model="searchQuery" placeholder="Search articles..." icon="i-heroicons-magnifying-glass"
             size="lg" />
         </div>
-        <USelect v-model="sortBy" :items="sortOptions" size="lg" class="w-full sm:w-48" />
+        <USelect v-model="sortBy" :items="constants.sortOptions" size="lg" class="w-full sm:w-48" />
       </div>
 
       
@@ -107,14 +107,15 @@
     </div>
 
     <div v-if="totalPages > 1" class="mt-12 flex justify-center">
-      <UPagination v-model="currentPage" :page-count="postsPerPage" :total="filteredPosts.length" :max="5" show-last
+      <UPagination v-model="currentPage" :page-count="constants.postsPerPage" :total="filteredPosts.length" :max="5" show-last
         show-first />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-// Enhanced SEO and meta
+import type { BlogPost } from "~/composables/types";
+
 const siteUrl = useEnvironment().siteUrl
 const pageUrl = `${siteUrl}/blog`
 const blogTitle = "Blog - Latest Articles and Tutorials"
@@ -128,140 +129,115 @@ useSeoMeta({
   ogType: "website",
   ogUrl: pageUrl,
   ogImage: `${siteUrl}/og-blog.jpg`,
-  twitterCard: 'summary_large_image',
+  twitterCard: "summary_large_image",
   twitterTitle: blogTitle,
   twitterDescription: blogDescription,
   twitterImage: `${siteUrl}/og-blog.jpg`,
-  robots: 'index, follow'
-});
+  robots: "index, follow",
+})
 
-// Reactive state
-const searchQuery = ref("");
-const selectedCategory = ref<string | null>(null);
-const selectedTag = ref<string | null>(null);
-const sortBy = ref("date-desc");
-const currentPage = ref(1);
-const postsPerPage = 9;
+const constants = useConstants()
+const searchQuery = ref("")
+const selectedCategory = ref<string | null>(null)
+const selectedTag = ref<string | null>(null)
+const sortBy = ref("date-desc")
+const currentPage = ref(1)
 
-// Sort options
-const sortOptions = [
-  { label: "Newest First", value: "date-desc" },
-  { label: "Oldest First", value: "date-asc" },
-  { label: "Title A-Z", value: "title-asc" },
-  { label: "Title Z-A", value: "title-desc" },
-];
-
-// Data fetching
 const { data: posts, pending, error } = await useAsyncData("blog-posts", async () => {
   try {
-    const result = await queryCollection("docs").all();
+    const result = await queryCollection("blog").all()
+    if (!result?.length) return []
 
-    if (!result?.length) return [];
-
-    const blogPosts = result.filter((item: any) =>
-      item.id?.includes("blog/") && !item.id.includes("blog/index.md")
-    );
-
-    return blogPosts.map((post: any) => {
-      const frontmatter = post.frontmatter || post.meta || post;
-      const slug = post.id.split("/").pop()?.replace(".md", "");
-
-      return {
-        ...post,
-        _path: `/blog/${slug}`,
-        date: String(frontmatter?.date || post.date || "2024-01-01"),
-        tags: Array.isArray(frontmatter?.tags || post.tags) 
-          ? frontmatter?.tags || post.tags 
-          : [],
-        category: frontmatter?.category || post.category || "uncategorized",
-        author: frontmatter?.author || post.author || "Unknown Author",
-        description: frontmatter?.description || post.description || post.title,
-      };
-    }).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    return result
+      .map((post) => {
+        const slug = post.id.split("/").pop()?.replace(".md", "")
+        return {
+          ...post,
+          _path: `/blog/${slug}`,
+        } as BlogPost
+      })
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
   } catch (err) {
-    console.error("Blog posts fetch error:", err);
-    return [];
+    console.error("Blog posts fetch error:", err)
+    return []
   }
-});
+})
 
-// Computed properties for filtering and sorting
 const availableCategories = computed(() => {
-  if (!posts.value) return [];
-  const categories = posts.value.map((post: any) => post.category).filter(Boolean);
-  return [...new Set(categories)].sort();
-});
+  if (!posts.value) return []
+  const categories = posts.value.map((post) => post.category).filter(Boolean)
+  return [...new Set(categories)].sort()
+})
 
 const availableTags = computed(() => {
-  if (!posts.value) return [];
-  const tags = posts.value.flatMap((post: any) => post.tags || []);
-  return [...new Set(tags)].sort();
-});
+  if (!posts.value) return []
+  const tags = posts.value.flatMap((post) => post.tags || [])
+  return [...new Set(tags)].sort()
+})
 
 const filteredPosts = computed(() => {
-  if (!posts.value) return [];
+  if (!posts.value) return []
 
   let filtered = posts.value.filter(
-    (post: any) => post._path !== "/blog/index" && post.title && !(post as any).draft
-  );
+    (post) => post.title && !post.draft
+  )
 
   if (searchQuery.value) {
-    const query = searchQuery.value.toLowerCase();
-    filtered = filtered.filter((post: any) =>
-      post.title?.toLowerCase().includes(query) ||
-      post.description?.toLowerCase().includes(query) ||
-      post.tags?.some((tag: string) => tag.toLowerCase().includes(query))
-    );
+    const query = searchQuery.value.toLowerCase()
+    filtered = filtered.filter(
+      (post) =>
+        post.title?.toLowerCase().includes(query) ||
+        post.description?.toLowerCase().includes(query) ||
+        post.tags?.some((tag: string) => tag.toLowerCase().includes(query))
+    )
   }
 
   if (selectedCategory.value) {
-    filtered = filtered.filter((post: any) => post.category === selectedCategory.value);
+    filtered = filtered.filter((post) => post.category === selectedCategory.value)
   }
 
   if (selectedTag.value) {
-    filtered = filtered.filter((post: any) => post.tags?.includes(selectedTag.value));
+    const tag = selectedTag.value
+    filtered = filtered.filter((post) => post.tags?.includes(tag))
   }
 
   const sortFunctions = {
-    "date-desc": (a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-    "date-asc": (a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime(),
-    "title-asc": (a: any, b: any) => a.title.localeCompare(b.title),
-    "title-desc": (a: any, b: any) => b.title.localeCompare(a.title),
-  };
+    "date-desc": (a: BlogPost, b: BlogPost) =>
+      new Date(b.date).getTime() - new Date(a.date).getTime(),
+    "date-asc": (a: BlogPost, b: BlogPost) =>
+      new Date(a.date).getTime() - new Date(b.date).getTime(),
+    "title-asc": (a: BlogPost, b: BlogPost) => a.title.localeCompare(b.title),
+    "title-desc": (a: BlogPost, b: BlogPost) => b.title.localeCompare(a.title),
+  }
 
-  return filtered.sort(sortFunctions[sortBy.value as keyof typeof sortFunctions] || (() => 0));
-});
+  return filtered.sort(
+    sortFunctions[sortBy.value as keyof typeof sortFunctions] || (() => 0)
+  )
+})
 
 const totalPages = computed(() =>
-  Math.ceil(filteredPosts.value.length / postsPerPage)
-);
+  Math.ceil(filteredPosts.value.length / constants.postsPerPage)
+)
 
 const paginatedPosts = computed(() => {
-  const start = (currentPage.value - 1) * postsPerPage;
-  const end = start + postsPerPage;
-  return filteredPosts.value.slice(start, end);
-});
+  const start = (currentPage.value - 1) * constants.postsPerPage
+  const end = start + constants.postsPerPage
+  return filteredPosts.value.slice(start, end)
+})
 
-// Utility functions
-const formatDate = (date: string) => {
-  return new Date(date).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-};
+const { formatDate } = useDateFormatter()
 
 const clearFilters = () => {
-  searchQuery.value = "";
-  selectedCategory.value = null;
-  selectedTag.value = null;
-  sortBy.value = "date-desc";
-  currentPage.value = 1;
-};
+  searchQuery.value = ""
+  selectedCategory.value = null
+  selectedTag.value = null
+  sortBy.value = "date-desc"
+  currentPage.value = 1
+}
 
-// Reset pagination when filters change
 watch([searchQuery, selectedCategory, selectedTag, sortBy], () => {
-  currentPage.value = 1;
-});
+  currentPage.value = 1
+})
 </script>
 
 <style scoped>

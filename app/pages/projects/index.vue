@@ -13,7 +13,7 @@
           <UInput v-model="searchQuery" placeholder="Search projects..." icon="i-heroicons-magnifying-glass"
             size="lg" />
         </div>
-        <USelect v-model="sortBy" :items="sortOptions" size="lg" class="w-full sm:w-48" />
+        <USelect v-model="sortBy" :items="constants.sortOptions" size="lg" class="w-full sm:w-48" />
       </div>
 
       
@@ -106,161 +106,137 @@
     </div>
 
     <div v-if="totalPages > 1" class="mt-12 flex justify-center">
-      <UPagination v-model="currentPage" :page-count="postsPerPage" :total="filteredPosts.length" :max="5" show-last
+      <UPagination v-model="currentPage" :page-count="constants.postsPerPage" :total="filteredPosts.length" :max="5" show-last
         show-first />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-// Enhanced SEO and meta
+import type { Project } from "~/composables/types"
+
 const siteUrl = useEnvironment().siteUrl
 const pageUrl = `${siteUrl}/projects`
-const blogTitle = "Projects - Tutorials and projects in development"
-const blogDescription = "Check out my projects, maybe would you like some one"
+const projectsTitle = "Projects - Development Portfolio"
+const projectsDescription = "Check out my projects, from web apps to mobile development"
 
 useSeoMeta({
-  title: blogTitle,
-  description: blogDescription,
-  ogTitle: blogTitle,
-  ogDescription: blogDescription,
+  title: projectsTitle,
+  description: projectsDescription,
+  ogTitle: projectsTitle,
+  ogDescription: projectsDescription,
   ogType: "website",
   ogUrl: pageUrl,
-  ogImage: `${siteUrl}/og-blog.jpg`,
-  twitterCard: 'summary_large_image',
-  twitterTitle: blogTitle,
-  twitterDescription: blogDescription,
-  twitterImage: `${siteUrl}/og-blog.jpg`,
-  robots: 'index, follow'
-});
+  ogImage: `${siteUrl}/og-projects.jpg`,
+  twitterCard: "summary_large_image",
+  twitterTitle: projectsTitle,
+  twitterDescription: projectsDescription,
+  twitterImage: `${siteUrl}/og-projects.jpg`,
+  robots: "index, follow",
+})
 
-// Reactive state
-const searchQuery = ref("");
-const selectedCategory = ref<string | null>(null);
-const selectedTag = ref<string | null>(null);
-const sortBy = ref("date-desc");
-const currentPage = ref(1);
-const postsPerPage = 9;
+const constants = useConstants()
+const searchQuery = ref("")
+const selectedCategory = ref<string | null>(null)
+const selectedTag = ref<string | null>(null)
+const sortBy = ref("date-desc")
+const currentPage = ref(1)
 
-// Sort options
-const sortOptions = [
-  { label: "Newest First", value: "date-desc" },
-  { label: "Oldest First", value: "date-asc" },
-  { label: "Title A-Z", value: "title-asc" },
-  { label: "Title Z-A", value: "title-desc" },
-];
-
-// Data fetching
 const { data: projects, pending, error } = await useAsyncData("projects-posts", async () => {
   try {
-    const result = await queryCollection("docs").all();
+    const result = await queryCollection("projects").all()
+    if (!result?.length) return []
 
-    if (!result?.length) return [];
-
-    const projectsPosts = result.filter((item: any) =>
-      item.id?.includes("projects/") && !item.id.includes("projects/index.md")
-    );
-
-    return projectsPosts.map((project: any) => {
-      const frontmatter = project.frontmatter || project.meta || project;
-      const slug = project.id.split("/").pop()?.replace(".md", "");
-
-      return {
-        ...project,
-        _path: `/projects/${slug}`,
-        date: String(frontmatter?.date || project.date || "2024-01-01"),
-        tags: Array.isArray(frontmatter?.tags || project.tags) 
-          ? frontmatter?.tags || project.tags 
-          : [],
-        category: frontmatter?.category || project.category || "uncategorized",
-        author: frontmatter?.author || project.author || "Unknown Author",
-        description: frontmatter?.description || project.description || project.title,
-      };
-    }).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    return result
+      .map((project) => {
+        const slug = project.id.split("/").pop()?.replace(".md", "")
+        return {
+          ...project,
+          _path: `/projects/${slug}`,
+        } as Project
+      })
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
   } catch (err) {
-    console.error("Projects posts fetch error:", err);
-    return [];
+    console.error("Projects fetch error:", err)
+    return []
   }
-});
+})
 
-// Computed properties for filtering and sorting
 const availableCategories = computed(() => {
-  if (!projects.value) return [];
-  const categories = projects.value.map((post: any) => post.category).filter(Boolean);
-  return [...new Set(categories)].sort();
-});
+  if (!projects.value) return []
+  const categories = projects.value.map((project) => project.category).filter(Boolean)
+  return [...new Set(categories)].sort()
+})
 
 const availableTags = computed(() => {
-  if (!projects.value) return [];
-  const tags = projects.value.flatMap((post: any) => post.tags || []);
-  return [...new Set(tags)].sort();
-});
+  if (!projects.value) return []
+  const tags = projects.value.flatMap((project) => project.tags || [])
+  return [...new Set(tags)].sort()
+})
 
 const filteredPosts = computed(() => {
-  if (!projects.value) return [];
+  if (!projects.value) return []
 
   let filtered = projects.value.filter(
-    (post: any) => post._path !== "/blog/index" && post.title && !(post as any).draft
-  );
+    (project) => project.title && !project.draft
+  )
 
   if (searchQuery.value) {
-    const query = searchQuery.value.toLowerCase();
-    filtered = filtered.filter((post: any) =>
-      post.title?.toLowerCase().includes(query) ||
-      post.description?.toLowerCase().includes(query) ||
-      post.tags?.some((tag: string) => tag.toLowerCase().includes(query))
-    );
+    const query = searchQuery.value.toLowerCase()
+    filtered = filtered.filter(
+      (project) =>
+        project.title?.toLowerCase().includes(query) ||
+        project.description?.toLowerCase().includes(query) ||
+        project.tags?.some((tag: string) => tag.toLowerCase().includes(query))
+    )
   }
 
   if (selectedCategory.value) {
-    filtered = filtered.filter((post: any) => post.category === selectedCategory.value);
+    filtered = filtered.filter((project) => project.category === selectedCategory.value)
   }
 
   if (selectedTag.value) {
-    filtered = filtered.filter((post: any) => post.tags?.includes(selectedTag.value));
+    const tag = selectedTag.value
+    filtered = filtered.filter((project) => project.tags?.includes(tag))
   }
 
   const sortFunctions = {
-    "date-desc": (a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-    "date-asc": (a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime(),
-    "title-asc": (a: any, b: any) => a.title.localeCompare(b.title),
-    "title-desc": (a: any, b: any) => b.title.localeCompare(a.title),
-  };
+    "date-desc": (a: Project, b: Project) =>
+      new Date(b.date).getTime() - new Date(a.date).getTime(),
+    "date-asc": (a: Project, b: Project) =>
+      new Date(a.date).getTime() - new Date(b.date).getTime(),
+    "title-asc": (a: Project, b: Project) => a.title.localeCompare(b.title),
+    "title-desc": (a: Project, b: Project) => b.title.localeCompare(a.title),
+  }
 
-  return filtered.sort(sortFunctions[sortBy.value as keyof typeof sortFunctions] || (() => 0));
-});
+  return filtered.sort(
+    sortFunctions[sortBy.value as keyof typeof sortFunctions] || (() => 0)
+  )
+})
 
 const totalPages = computed(() =>
-  Math.ceil(filteredPosts.value.length / postsPerPage)
-);
+  Math.ceil(filteredPosts.value.length / constants.postsPerPage)
+)
 
 const paginatedPosts = computed(() => {
-  const start = (currentPage.value - 1) * postsPerPage;
-  const end = start + postsPerPage;
-  return filteredPosts.value.slice(start, end);
-});
+  const start = (currentPage.value - 1) * constants.postsPerPage
+  const end = start + constants.postsPerPage
+  return filteredPosts.value.slice(start, end)
+})
 
-// Utility functions
-const formatDate = (date: string) => {
-  return new Date(date).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-};
+const { formatDate } = useDateFormatter()
 
 const clearFilters = () => {
-  searchQuery.value = "";
-  selectedCategory.value = null;
-  selectedTag.value = null;
-  sortBy.value = "date-desc";
-  currentPage.value = 1;
-};
+  searchQuery.value = ""
+  selectedCategory.value = null
+  selectedTag.value = null
+  sortBy.value = "date-desc"
+  currentPage.value = 1
+}
 
-// Reset pagination when filters change
 watch([searchQuery, selectedCategory, selectedTag, sortBy], () => {
-  currentPage.value = 1;
-});
+  currentPage.value = 1
+})
 </script>
 
 <style scoped>

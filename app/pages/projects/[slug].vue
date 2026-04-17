@@ -155,27 +155,21 @@ const { data: adjacentProjects } = await useAsyncData(`adjacent-projects-${slug}
 
     if (allPosts && allPosts.length > 0) {
       const projectsAdjacent = allPosts
-        .filter((item: any) =>
-          item.id &&
-          item.id.includes("projects/") &&
-          !item.id.includes("projects/index.md")
-        )
-        .map((post: any) => {
-          const frontmatter = post.frontmatter || post.meta || post
+        .map((p) => {
+          const projectSlug = p.id.split("/").pop()?.replace(".md", "")
           return {
-            ...post,
-            _path: `/projects/${post.id.split("/").pop()?.replace(".md", "")}`,
-            date: String(frontmatter?.date || post.date || "2024-01-01"),
-            title: frontmatter?.title || post.title || "Untitled Project"
-          }
+            _path: `/projects/${projectSlug}`,
+            title: p.title,
+            date: p.date,
+          } as AdjacentPost
         })
-        .sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime())
+        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 
-      const currentIndex = projectsAdjacent.findIndex((p: any) => p._path === `/projects/${slug}`)
+      const currentIndex = projectsAdjacent.findIndex((p) => p._path === `/projects/${slug}`)
 
       return {
         previous: currentIndex > 0 ? projectsAdjacent[currentIndex - 1] : null,
-        next: currentIndex < projectsAdjacent.length - 1 ? projectsAdjacent[currentIndex + 1] : null
+        next: currentIndex < projectsAdjacent.length - 1 ? projectsAdjacent[currentIndex + 1] : null,
       }
     }
 
@@ -190,19 +184,10 @@ const previousPost = computed(() => adjacentProjects.value?.previous)
 const nextPost = computed(() => adjacentProjects.value?.next)
 
 // Calculate estimated reading time
-const { getReadingTime } = useDateFormatter()
+const { getReadingTime, formatDate } = useDateFormatter()
 const readingTime = computed(() => {
   return getReadingTime(project.value?.body)
 })
-
-// Format date helper
-const formatDate = (date: string) => {
-  return new Date(date).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  })
-}
 
 // Enhanced SEO Meta tags with automatic data from frontmatter
 watchEffect(() => {
@@ -216,10 +201,10 @@ watchEffect(() => {
       description: project.value.description,
       ogTitle: project.value.title,
       ogDescription: project.value.description,
-      ogType: 'article',
+      ogType: "article",
       ogUrl: postUrl,
       ogImage: imageUrl,
-      twitterCard: 'summary_large_image',
+      twitterCard: "summary_large_image",
       twitterTitle: project.value.title,
       twitterDescription: project.value.description,
       twitterImage: imageUrl,
@@ -228,7 +213,7 @@ watchEffect(() => {
       articleModifiedTime: project.value.date,
       articleSection: project.value.category,
       articleTag: project.value.tags || undefined,
-      robots: 'index, follow',
+      robots: "index, follow",
     })
   }
 })
