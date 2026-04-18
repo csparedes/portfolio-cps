@@ -92,12 +92,14 @@
 
 <script lang="ts" setup>
 const images = [
-  { src: "sdv-1.png", alt: "al" },
-  { src: "sgd-1.png", alt: "al" },
-  { src: "sa-1.png", alt: "al" },
-  { src: "sga-1.png", alt: "al" },
-  { src: "sbac-1.png", alt: "al" },
-  { src: "srb-1.png", alt: "al" },
+  { src: "/projects/pulse-app-img.png", alt: "Pulse Masterclass Vue 2025" },
+  { src: "/projects/electronic-vote-img.png", alt: "Electronic Vote System" },
+  { src: "/sdv-1.png", alt: "SDV Project" },
+  { src: "/sgd-1.png", alt: "SGD Project" },
+  { src: "/sa-1.png", alt: "SA Project" },
+  { src: "/sga-1.png", alt: "SGA Project" },
+  { src: "/sbac-1.png", alt: "SBAC Project" },
+  { src: "/srb-1.png", alt: "SRB Project" },
 ];
 </script>
 
