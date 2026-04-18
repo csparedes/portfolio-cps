@@ -24,15 +24,11 @@
         },
       ]"
     />
-    <main class="flex-1 py-8 px-4 md:px-20">
-      <UContainer>
-        <slot />
-      </UContainer>
+    <main class="flex-1">
+      <slot />
     </main>
     <AppFooter />
   </div>
 </template>
 
-<script lang="ts" setup></script>
-
-<style></style>
+<script setup lang="ts"></script>

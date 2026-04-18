@@ -1,53 +1,51 @@
 <template>
-  <div class="flex justify-between p-4">
-    <div>{{ footer.credits }}</div>
-    <div>
-      <UButton
-        v-for="(link, index) of footer?.links"
-        :key="index"
-        v-bind="{ size: 'xs', color: 'neutral', variant: 'ghost', ...link }"
-      />
+  <footer class="py-8 px-4 border-t border-gray-200 dark:border-gray-800">
+    <div class="container mx-auto">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="text-sm text-gray-500 dark:text-gray-400">
+          {{ copyright }}
+        </div>
+
+        <div class="flex items-center gap-2">
+          <UButton
+            v-for="link in socialLinks"
+            :key="link.label"
+            :icon="link.icon"
+            :to="link.to"
+            :target="link.target"
+            :aria-label="link.label"
+            variant="ghost"
+            size="sm"
+          />
+        </div>
+      </div>
     </div>
-  </div>
+  </footer>
 </template>
 
-<script lang="ts" setup>
-const footer = reactive({
-  credits: `Copyright © ${new Date().getFullYear()}`,
-  colorMode: false,
-  links: [
-    {
-      icon: "i-simple-icons-nuxtdotjs",
-      to: "https://nuxt.com",
-      target: "_blank",
-      "aria-label": "Nuxt Website",
-    },
-    {
-      icon: "i-simple-icons-discord",
-      to: "https://discord.com/invite/ps2h6QT",
-      target: "_blank",
-      "aria-label": "Nuxt UI on Discord",
-    },
-    {
-      icon: "i-simple-icons-x",
-      to: "https://x.com/nuxt_js",
-      target: "_blank",
-      "aria-label": "Nuxt on X",
-    },
-    {
-      icon: "i-simple-icons-github",
-      to: "https://github.com/nuxt/ui",
-      target: "_blank",
-      "aria-label": "Nuxt UI on GitHub",
-    },
-    {
-      icon: "skill-icons:gmail-light",
-      to: "mailto:csparedes1995@gmail.com",
-      target: "_blank",
-      "aria-label": "Email csparedes1995@gmail.com",
-    },
-  ],
-});
-</script>
+<script setup lang="ts">
+const copyright = computed(() => {
+  return `© ${new Date().getFullYear()} Cristian Paredes Sánchez`
+})
 
-<style></style>
+const socialLinks = [
+  {
+    label: "GitHub",
+    icon: "i-simple-icons-github",
+    to: "https://github.com/csparedes",
+    target: "_blank" as const,
+  },
+  {
+    label: "LinkedIn",
+    icon: "i-simple-icons-linkedin",
+    to: "https://www.linkedin.com/in/csparedes/",
+    target: "_blank" as const,
+  },
+  {
+    label: "Email",
+    icon: "skill-icons:gmail-light",
+    to: "mailto:csparedes1995@gmail.com",
+    target: "_blank" as const,
+  },
+]
+</script>
