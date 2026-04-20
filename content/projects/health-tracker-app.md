@@ -1,7 +1,7 @@
 ---
 title: Health Tracker App
 description: Flutter mobile app for personal health data tracking - record and monitor glucose levels, waist diameter, and body weight over time
-image: /projects/health-tracker-app/hta-1.png
+image: /projects/health-tracker-app/health-tracker-app-1.png
 author: Cristian Paredes
 status: deployed
 category: Mobile App

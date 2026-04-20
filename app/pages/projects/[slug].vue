@@ -89,6 +89,13 @@
 
       <div class="mb-8" />
 
+      <ProjectGallery
+        v-if="project"
+        :project-slug="slug"
+      />
+
+      <div class="mb-8" />
+
       <!-- Post Content -->
       <div class="max-w-none blog-content">
         <ContentRenderer v-if="project" :value="project" />
@@ -122,11 +129,10 @@
 </template>
 
 <script lang="ts" setup>
-// Get the slug from the route
 const route = useRoute()
 const slug = route.params.slug as string
 
-// Fetch the blog post
+// Fetch the project post
 const { data: project, pending, error } = await useAsyncData(`projects-post-${slug}`, async () => {
   try {
     const result = await queryCollection("projects").path(route.path).first()

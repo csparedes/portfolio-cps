@@ -9,7 +9,7 @@ tags:
   - supabase
 title: Pulse Masterclass Vue 2025
 description: Full-featured task and project management app with Vue 3, Pinia, Supabase, and TanStack libraries
-image: /projects/pulse-app-img.png
+image: /projects/pulse-masterclass-vue-2025/pulse-masterclass-vue-2025-1.png
 author: Cristian Paredes
 status: deployed
 category: Web app

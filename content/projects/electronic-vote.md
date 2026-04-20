@@ -1,7 +1,7 @@
 ---
 title: Electronic Vote
 description: Electronic voting system built with Nuxt 4, allowing election administration, candidate management, and secure vote recording with JWT authentication
-image: /projects/electronic-vote-img.png
+image: /projects/electronic-vote/electronic-vote-1.png
 author: Cristian Paredes
 status: in-development
 category: Web App
