@@ -2,8 +2,8 @@
   <div v-if="images.length > 0" class="mb-8">
     <div v-if="images.length === 1" class="rounded-xl overflow-hidden">
       <NuxtImg
-        :src="images[0]?.src"
-        :alt="images[0]?.alt"
+        :src="images[0].src"
+        :alt="images[0].alt"
         class="w-full h-64 md:h-80 lg:h-96 object-cover"
         loading="lazy"
       />
@@ -65,35 +65,17 @@ interface GalleryImage {
 }
 
 const props = defineProps<{
-  projectSlug: string
+  images: GalleryImage[]
 }>()
 
 const currentIndex = ref(0)
-const MAX_IMAGES = 10
-
-const images = computed<GalleryImage[]>(() => {
-  const result: GalleryImage[] = []
-  const extensions = ["png", "jpg", "jpeg", "webp"]
-  const folderPath = `/projects/${props.projectSlug}`
-
-  for (let i = 1; i <= MAX_IMAGES; i++) {
-    for (const ext of extensions) {
-      result.push({
-        src: `${folderPath}/${props.projectSlug}-${i}.${ext}`,
-        alt: `Project screenshot ${i}`,
-      })
-    }
-  }
-
-  return result
-})
 
 const prevSlide = () => {
   currentIndex.value =
-    (currentIndex.value - 1 + images.value.length) % images.value.length
+    (currentIndex.value - 1 + props.images.length) % props.images.length
 }
 
 const nextSlide = () => {
-  currentIndex.value = (currentIndex.value + 1) % images.value.length
+  currentIndex.value = (currentIndex.value + 1) % props.images.length
 }
 </script>

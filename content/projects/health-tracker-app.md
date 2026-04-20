@@ -6,6 +6,7 @@ author: Cristian Paredes
 status: deployed
 category: Mobile App
 date: 2025-03-15
+maxImages: 7
 tags:
   - flutter
   - dart

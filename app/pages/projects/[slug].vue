@@ -91,7 +91,7 @@
 
       <ProjectGallery
         v-if="project"
-        :project-slug="slug"
+        :images="projectImages"
       />
 
       <div class="mb-8" />
@@ -140,7 +140,7 @@ const { data: project, pending, error } = await useAsyncData(`projects-post-${sl
     if (!result) {
       throw createError({
         statusCode: 404,
-        statusMessage: 'Projects not found'
+        statusMessage: "Projects not found",
       })
     }
 
@@ -149,9 +149,37 @@ const { data: project, pending, error } = await useAsyncData(`projects-post-${sl
     console.error("Error fetching project post:", err)
     throw createError({
       statusCode: 404,
-      statusMessage: 'Project not found'
+      statusMessage: "Project not found",
     })
   }
+})
+
+interface GalleryImage {
+  src: string
+  alt: string
+}
+
+interface ProjectWithMaxImages {
+  maxImages?: number
+  title?: string
+  [key: string]: unknown
+}
+
+const projectImages = computed<GalleryImage[]>(() => {
+  if (!project.value) return []
+
+  const p = project.value as ProjectWithMaxImages
+  const maxImages = p.maxImages || 1
+  const images: GalleryImage[] = []
+
+  for (let i = 1; i <= maxImages; i++) {
+    images.push({
+      src: `/projects/${slug}/${slug}-${i}.png`,
+      alt: `${project.value.title} - Image ${i}`,
+    })
+  }
+
+  return images
 })
 
 // Fetch adjacent posts for navigation
