@@ -28,7 +28,8 @@ export default defineContentConfig({
                 category: z.string(),
                 image: z.string(),
                 draft: z.boolean(),
-                status: z.string()
+                status: z.string(),
+                maxImages: z.number().optional()
             }),
         }),
         about: defineCollection({
