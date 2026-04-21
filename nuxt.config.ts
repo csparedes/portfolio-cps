@@ -62,6 +62,11 @@ export default defineNuxtConfig({
     },
     chunkSizeWarningLimit: 600
   },
+  vite: {
+    build: {
+      sourcemap: false
+    }
+  },
   $production: {
     studio: false
   }
