@@ -43,18 +43,26 @@ export default defineNuxtConfig({
     build: {
       markdown: {
         highlight: {
-          // OR
           theme: {
-            // Default theme (same as single string)
             default: 'github-light',
-            // Theme used if `html.dark`
             dark: 'github-dark',
-            // Theme used if `html.sepia`
             sepia: 'monokai'
           },
-          
         }
       }
-    }
+    },
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'nuxt-vendor': ['nuxt', 'vue', 'vue-router'],
+          'nuxt-ui': ['@nuxt/ui'],
+          'content': ['@nuxt/content'],
+        }
+      }
+    },
+    chunkSizeWarningLimit: 600
+  },
+  $production: {
+    studio: false
   }
 });
