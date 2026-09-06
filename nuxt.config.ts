@@ -9,7 +9,8 @@ export default defineNuxtConfig({
     "@nuxt/ui",
     "@nuxtjs/color-mode",
     "@nuxt/fonts",
-    "@nuxt/content"
+    "@nuxt/content",
+    "@vercel/analytics/nuxt"
   ],
 
  

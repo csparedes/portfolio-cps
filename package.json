@@ -20,6 +20,7 @@
     "@nuxt/test-utils": "^3.23.0",
     "@nuxt/ui": "3.3.2",
     "@nuxtjs/color-mode": "3.5.2",
+    "@vercel/analytics": "^2.0.1",
     "better-sqlite3": "^12.6.2",
     "eslint": "^9.39.3",
     "nuxt": "^4.3.1",
