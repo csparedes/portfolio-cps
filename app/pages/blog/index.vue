@@ -54,8 +54,9 @@
     </div>
 
     <div v-else-if="!error && paginatedPosts.length > 0" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-      <UCard v-for="post in paginatedPosts" :key="post._path" variant="subtle"
-        class="hover:shadow-lg transition-shadow duration-200 cursor-pointer" @click="navigateTo(post._path)">
+      <NuxtLink v-for="post in paginatedPosts" :key="post._path" :to="post._path"
+        class="block rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+        <UCard variant="subtle" class="hover:shadow-lg transition-shadow duration-200">
         <template #header>
           <div class="space-y-2">
             <div class="flex justify-between items-start">
@@ -94,7 +95,8 @@
             </span>
           </div>
         </template>
-      </UCard>
+        </UCard>
+      </NuxtLink>
     </div>
 
     <div v-else-if="!error && !pending" class="text-center py-12">
@@ -128,11 +130,11 @@ useSeoMeta({
   ogDescription: blogDescription,
   ogType: "website",
   ogUrl: pageUrl,
-  ogImage: `${siteUrl}/og-blog.jpg`,
+  ogImage: `${siteUrl}/og-default.svg`,
   twitterCard: "summary_large_image",
   twitterTitle: blogTitle,
   twitterDescription: blogDescription,
-  twitterImage: `${siteUrl}/og-blog.jpg`,
+  twitterImage: `${siteUrl}/og-default.svg`,
   robots: "index, follow",
 })
 

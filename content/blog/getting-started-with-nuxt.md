@@ -10,7 +10,7 @@ tags:
   - javascript
   - web-development
 category: tutorial
-image: /blog/nuxt-getting-started.jpg
+image: /og-default.svg
 draft: false
 ---
 

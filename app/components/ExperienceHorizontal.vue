@@ -71,26 +71,32 @@ interface Experience {
 const experiences: Experience[] = [
   {
     company: "Pontificia Universidad Católica del Ecuador",
-    role: "System Analyst & Fullstack Developer",
-    period: "2022 - Current",
-    tech: ["Vue", "Nuxt", "PostgreSQL", "Oracle", "Docker", "Jenkins"],
+    role: "Systems Analyst & Full Stack Developer",
+    period: "Apr 2022 - Present",
+    tech: ["Node.js", "NestJS", "React", "Vue", "Docker", "Jenkins"],
   },
   {
-    company: "Soluciones Tecnológicas Kauel",
-    role: "Fullstack Developer",
-    period: "2022 - 2024",
-    tech: ["React", "Node.js", "Azure", "SQL Server"],
+    company: "Soluciones Tecnológicas KAUEL",
+    role: "Full Stack Developer",
+    period: "Nov 2022 - Apr 2024",
+    tech: ["Node.js", "NestJS", "React", "CQRS"],
   },
   {
     company: "GAD Tulcán",
-    role: "Database Manager Intern",
+    role: "Economic Development Intern",
     period: "Jan - Mar 2021",
-    tech: ["SQL", "MySQL", "MS Excel"],
+    tech: ["React", "MySQL", "Data Modeling"],
+  },
+  {
+    company: "GESIN",
+    role: "Co-Founder & Technology Area Coordinator",
+    period: "Nov 2020 - Oct 2021",
+    tech: ["Scrum", "Project Management", "IT Consulting"],
   },
   {
     company: "PUCE Ibarra",
     role: "IT Support & Virtualization Intern",
-    period: "2019 - 2020",
+    period: "May 2019 - Mar 2020",
     tech: ["Linux", "VMware", "oVirt"],
   },
 ]

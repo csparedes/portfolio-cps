@@ -162,6 +162,7 @@ interface GalleryImage {
 interface ProjectWithMaxImages {
   maxImages?: number
   title?: string
+  image?: string
   [key: string]: unknown
 }
 
@@ -170,6 +171,16 @@ const projectImages = computed<GalleryImage[]>(() => {
 
   const p = project.value as ProjectWithMaxImages
   const maxImages = p.maxImages || 1
+  const image = p.image
+  if (!image) return []
+
+  if (maxImages === 1) {
+    return [{
+      src: image,
+      alt: `${project.value.title} - Image 1`,
+    }]
+  }
+
   const images: GalleryImage[] = []
 
   for (let i = 1; i <= maxImages; i++) {
@@ -228,7 +239,7 @@ watchEffect(() => {
   if (project.value) {
     const siteUrl = useEnvironment().siteUrl
     const postUrl = `${siteUrl}/projects/${slug}`
-    const imageUrl = project.value.image ? `${siteUrl}${project.value.image}` : `${siteUrl}/og-default.jpg`
+    const imageUrl = project.value.image ? `${siteUrl}${project.value.image}` : `${siteUrl}/og-default.svg`
 
     useSeoMeta({
       title: project.value.title,

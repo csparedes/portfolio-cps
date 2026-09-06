@@ -12,7 +12,7 @@
             <div class="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-72 lg:h-72 rounded-full overflow-hidden border-4 border-primary/20 shadow-2xl">
               <NuxtImg
                 src="/perfil.jpg"
-                alt="Crisitan Paredes Sanchez"
+                alt="Cristian Stalin Paredes Sanchez"
                 class="w-full h-full object-cover"
                 loading="eager"
               />
@@ -33,7 +33,7 @@
             ref="nameRef"
             class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 dark:from-gray-100 dark:via-gray-300 dark:to-gray-100 bg-clip-text opacity-0 translate-y-4"
           >
-            Cristian Paredes Sánchez
+            Cristian Stalin Paredes Sánchez
           </h1>
 
           <div
@@ -88,10 +88,10 @@
 
 <script setup lang="ts">
 const titles = [
-  "System Engineer",
-  "Software Developer",
-  "Full Stack Developer",
-  "Vue/Nuxt Specialist",
+  "Backend-focused Full Stack Engineer",
+  "Node.js & NestJS Developer",
+  "Vue & Nuxt Developer",
+  "CI/CD & Docker Practitioner",
 ]
 
 const displayedTitle = ref("")

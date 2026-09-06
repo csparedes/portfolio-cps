@@ -9,6 +9,7 @@ tags:
   - components
   - demo
 category: demo
+image: /og-default.svg
 draft: false
 ---
 
@@ -52,7 +53,7 @@ Images are automatically optimized using @nuxt/image:
 ---
 alt: Nuxt.js Getting Started
 height: "400"
-src: /blog/nuxt-getting-started.jpg
+src: /og-default.svg
 width: "800"
 ---
 ::

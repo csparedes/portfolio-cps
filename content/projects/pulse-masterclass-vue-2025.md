@@ -86,7 +86,7 @@ npm run lint       # ESLint
 
 ## Screenshots
 
-![Pulse App](/projects/pulse-app-img.png)
+![Pulse App](/projects/pulse-masterclass-vue-2025/pulse-masterclass-vue-2025-1.png)
 
 ## Learn More
 

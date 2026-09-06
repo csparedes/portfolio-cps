@@ -10,26 +10,25 @@
         >
           <h2 class="text-3xl font-bold mb-6">About Me</h2>
           <p class="text-lg text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
-            I improve software developing process and make tailor apps for solve
-            your needs. Systems Engineer with a Master's degree in Full Stack
-            Development and over 4 years of experiences in designing, developing,
-            and implementing web applications and technological solutions.
-            Specialized in technologies such as Node.js, NestJS, React, and Vue,
-            with a focus on creating efficient systems.
+            Backend-focused Full Stack Engineer with 5+ years of experience
+            designing and delivering web applications, scalable REST APIs,
+            microservices, and CI/CD pipelines. I work with Node.js, NestJS,
+            PostgreSQL, React, Vue, Nuxt, Docker, and Jenkins to create reliable
+            solutions for distributed teams.
           </p>
 
           <div class="flex flex-wrap justify-center gap-8 mb-8">
             <div class="text-center">
-              <div class="text-4xl font-bold text-primary">4+</div>
+              <div class="text-4xl font-bold text-primary">5+</div>
               <div class="text-sm text-gray-500">Years Experience</div>
             </div>
             <div class="text-center">
-              <div class="text-4xl font-bold text-primary">10+</div>
-              <div class="text-sm text-gray-500">Projects Delivered</div>
+              <div class="text-4xl font-bold text-primary">CI/CD</div>
+              <div class="text-sm text-gray-500">Docker & Jenkins</div>
             </div>
             <div class="text-center">
-              <div class="text-4xl font-bold text-primary">6</div>
-              <div class="text-sm text-gray-500">Technologies</div>
+              <div class="text-4xl font-bold text-primary">B2</div>
+              <div class="text-sm text-gray-500">English Certified</div>
             </div>
           </div>
 
@@ -91,14 +90,17 @@ const { data: projects } = await useAsyncData("homepage-projects", async () => {
     const result = await queryCollection("projects").all()
     if (!result?.length) return []
 
-    return result.slice(0, 6).map((project) => {
-      const slug = project.id.split("/").pop()?.replace(".md", "")
-      return {
-        ...project,
-        _path: `/projects/${slug}`,
-        slug,
-      }
-    })
+    return result
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .slice(0, 6)
+      .map((project) => {
+        const slug = project.id.split("/").pop()?.replace(".md", "")
+        return {
+          ...project,
+          _path: `/projects/${slug}`,
+          slug,
+        }
+      })
   } catch (err) {
     console.error("Error fetching projects:", err)
     return []
@@ -110,7 +112,7 @@ watchEffect(() => {
     projectImages.value = projects.value
       .filter((p) => p.image)
       .map((p) => ({
-        src: p.image || "/placeholder.png",
+        src: p.image ?? "/og-default.svg",
         alt: p.title || "Project",
         tags: p.tags?.slice(0, 3) || [],
         link: `/projects/${p.slug}`,

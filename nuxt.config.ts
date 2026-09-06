@@ -6,12 +6,10 @@ export default defineNuxtConfig({
   modules: [
     "@nuxt/eslint",
     "@nuxt/image",
-    "@nuxt/test-utils",
     "@nuxt/ui",
     "@nuxtjs/color-mode",
     "@nuxt/fonts",
-    "@nuxt/content",
-    "nuxt-studio"
+    "@nuxt/content"
   ],
 
  
@@ -51,23 +49,11 @@ export default defineNuxtConfig({
         }
       }
     },
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          'nuxt-vendor': ['nuxt', 'vue', 'vue-router'],
-          'nuxt-ui': ['@nuxt/ui'],
-          'content': ['@nuxt/content'],
-        }
-      }
-    },
-    chunkSizeWarningLimit: 600
   },
   vite: {
     build: {
-      sourcemap: false
+      sourcemap: false,
+      chunkSizeWarningLimit: 600
     }
-  },
-  $production: {
-    studio: false
   }
 });

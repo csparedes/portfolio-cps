@@ -6,6 +6,7 @@ author: "Cristian Paredes"
 tags: ["flutter", "nodejs", "express", "typescript", "mobile"]
 category: Mobile App
 status: offline
+image: /og-default.svg
 ---
 
 # Gestiona Facil - Store Management Dashboard

@@ -184,7 +184,7 @@ const readingTime = computed(() => getReadingTime(post.value?.body))
 watchEffect(() => {
   if (post.value) {
     const postUrl = `${siteUrl}/blog/${slug}`
-    const imageUrl = post.value.image ? `${siteUrl}${post.value.image}` : `${siteUrl}/og-default.jpg`
+    const imageUrl = post.value.image ? `${siteUrl}${post.value.image}` : `${siteUrl}/og-default.svg`
 
     useSeoMeta({
       title: post.value.title,

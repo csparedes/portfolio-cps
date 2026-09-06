@@ -22,7 +22,7 @@ describe('Content Navigation E2E Tests', async () => {
       const page = await createPage('/blog')
       
       // Click on first blog post
-      await page.click('.cursor-pointer:first-child')
+      await page.click('.grid a[href^="/blog/"]:first-child')
       
       // Should navigate to individual post
       expect(page.url()).toMatch(/\/blog\/[\w-]+/)
@@ -77,7 +77,7 @@ describe('Content Navigation E2E Tests', async () => {
       await page.waitForTimeout(500)
       
       // Check that results are filtered
-      const posts = await page.locator('.grid .cursor-pointer').count()
+      const posts = await page.locator('.grid a[href^="/blog/"]').count()
       expect(posts).toBeGreaterThan(0)
     })
 
@@ -93,7 +93,7 @@ describe('Content Navigation E2E Tests', async () => {
         await page.waitForTimeout(500)
         
         // Should show filtered results
-        const posts = await page.locator('.grid .cursor-pointer').count()
+      const posts = await page.locator('.grid a[href^="/blog/"]').count()
         expect(posts).toBeGreaterThanOrEqual(0)
       }
     })
@@ -110,7 +110,7 @@ describe('Content Navigation E2E Tests', async () => {
         await page.waitForTimeout(500)
         
         // Should show filtered results
-        const posts = await page.locator('.grid .cursor-pointer').count()
+      const posts = await page.locator('.grid a[href^="/blog/"]').count()
         expect(posts).toBeGreaterThanOrEqual(0)
       }
     })
@@ -141,7 +141,7 @@ describe('Content Navigation E2E Tests', async () => {
       await page.waitForTimeout(500)
       
       // Check that posts are reordered
-      const firstPostTitle = await page.textContent('.grid .cursor-pointer:first-child h2')
+      const firstPostTitle = await page.textContent('.grid a[href^="/blog/"]:first-child h2')
       expect(firstPostTitle).toBeDefined()
     })
   })
@@ -154,7 +154,7 @@ describe('Content Navigation E2E Tests', async () => {
       await page.setViewportSize({ width: 375, height: 667 })
       
       // Navigation should still work
-      await page.click('.cursor-pointer:first-child')
+      await page.click('.grid a[href^="/blog/"]:first-child')
       expect(page.url()).toMatch(/\/blog\/[\w-]+/)
     })
 
@@ -163,7 +163,7 @@ describe('Content Navigation E2E Tests', async () => {
       await page.setViewportSize({ width: 375, height: 667 })
       
       // Tap on post card
-      await page.tap('.cursor-pointer:first-child')
+      await page.tap('.grid a[href^="/blog/"]:first-child')
       expect(page.url()).toMatch(/\/blog\/[\w-]+/)
     })
   })

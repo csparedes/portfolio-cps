@@ -3,9 +3,9 @@ export interface BlogPost {
   title: string
   description: string
   date: string
-  author: string
+  author?: string
   tags: string[]
-  category: string
+  category?: string
   image?: string
   draft?: boolean
 }
@@ -15,9 +15,9 @@ export interface Project {
   title: string
   description: string
   date: string
-  author: string
+  author?: string
   tags: string[]
-  category: string
+  category?: string
   image?: string
   draft?: boolean
   status?: string

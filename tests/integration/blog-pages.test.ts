@@ -20,7 +20,7 @@ describe("Blog Pages Integration Tests", async () => {
 
       // Check for blog post grid structure
       expect(html).toContain("grid gap-6");
-      expect(html).toContain("UCard");
+      expect(html).toMatch(/href="\/blog\/[^"/]+"/);
     });
 
     it("should include search and filter functionality", async () => {
@@ -117,8 +117,8 @@ describe("Blog Pages Integration Tests", async () => {
       const html = await $fetch("/blog/nuxt-content-components-demo");
 
       // Check for custom component rendering
-      expect(html).toContain("ProseAlert");
-      expect(html).toContain("ProseCallout");
+      expect(html).toContain("This is an informational alert.");
+      expect(html).toContain("This is a callout component");
     });
 
     it("should handle component props correctly", async () => {

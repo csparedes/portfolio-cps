@@ -8,12 +8,12 @@
     <!-- Error State (404) -->
     <div v-else-if="error || !about" class="text-center py-12">
       <UIcon name="i-heroicons-document-text" class="w-16 h-16 mx-auto text-gray-400 mb-4" />
-      <h1 class="text-3xl font-bold mb-4">Project Not Found</h1>
+      <h1 class="text-3xl font-bold mb-4">About Page Not Found</h1>
       <p class="text-gray-600 dark:text-gray-400 mb-6">
-        The project post you're looking for doesn't exist or has been moved.
+        The About page you're looking for doesn't exist or has been moved.
       </p>
-      <UButton variant="outline" @click="navigateTo('/projects')" >
-        Back to Projects
+      <UButton variant="outline" @click="navigateTo('/')" >
+        Back to Home
       </UButton>
     </div>
 
@@ -53,10 +53,10 @@ const { data: about, pending, error } = await useAsyncData(`about`, async () => 
 
     return result
   } catch (err) {
-    console.error("Error fetching project post:", err)
+    console.error("Error fetching About page:", err)
     throw createError({
       statusCode: 404,
-      statusMessage: 'Project not found'
+      statusMessage: 'About page not found'
     })
   }
 })
@@ -67,7 +67,7 @@ watchEffect(() => {
   if (about.value) {
     const siteUrl = useEnvironment().siteUrl // Replace with your actual domain
     const postUrl = `${siteUrl}/about`
-    const imageUrl = about.value.image ? `${siteUrl}${about.value.image}` : `${siteUrl}/og-default.jpg`
+    const imageUrl = about.value.image ? `${siteUrl}${about.value.image}` : `${siteUrl}/og-default.svg`
 
     useSeoMeta({
       title: about.value.title,

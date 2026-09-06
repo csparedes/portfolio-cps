@@ -1,24 +1,28 @@
 ---
-title: Personal Blog
+title: About Cristian Stalin Paredes Sánchez
+description: Backend-focused Full Stack Engineer with 5+ years of experience building scalable web applications, APIs, microservices, and CI/CD pipelines.
 date: 2025-11-15T00:00:00.000Z
-description: A little about me
 draft: false
 ---
 
 # About
 
-This portfolio and blog is my initiative to start sharing my projects, strategies, and insights. There is a vast amount of knowledge available on the web about software development, and to be honest, it can often feel overwhelming.
+I'm a backend-focused Full Stack Engineer with 5+ years of experience designing and delivering web applications, scalable REST APIs, microservices, and CI/CD pipelines. I build reliable, maintainable solutions for distributed teams.
 
-My goal is to share what works for me—including the tools I use (like A.I.) and other practical tips you can apply. Feel free to explore, and don’t hesitate to reach out if you have something you’d like to accomplish together.
+## Technical Focus
 
-# Bio
+My primary stack includes **Node.js**, **NestJS**, **PostgreSQL**, **React**, **Vue.js**, **Nuxt**, **Docker**, and **Jenkins**. I also work with REST APIs, CQRS, relational and non-relational databases, code reviews, and Agile delivery practices.
 
-I'm a fullstack developer dedicated to **building** fast, scalable web and mobile apps with outstanding user **experiences**.
+I am currently developing hands-on skills in Terraform and Infrastructure as Code.
 
-My main stack includes **Vue.js and Nuxt.js** as my frontend strengths, with additional experience in **React and Next.js**. On the backend, I specialize in **NestJS** and also work with **FastAPI (Python)**. For databases, I have experience with **PostgreSQL and MongoDB**.
+## Experience
 
-This blog is where I share my coding journey—practical tips on everything from AI tools to clean code practices. I'm all about learning in public and adding value to the dev community.
+Since April 2022, I have worked as a Systems Analyst and Full Stack Developer at Pontificia Universidad Católica del Ecuador - Ibarra. Previously, I worked remotely as a Full Stack Developer at Soluciones Tecnológicas KAUEL, where I contributed to Node.js, NestJS, React, CQRS, and IoT integrations.
 
-Got an idea or a project? I'd love to connect! Feel free to reach out at my email.
+My earlier experience includes coordinating technology initiatives at GESIN, building data-management tooling for GAD Tulcán, and supporting virtualization infrastructure at PUCE Ibarra.
 
-**Happy coding!**
+## Education & Languages
+
+I hold a Master's Degree in Full Stack Development from Universidad Internacional de La Rioja and a Bachelor's Degree in Systems Engineering from Pontificia Universidad Católica del Ecuador - Ibarra. I am Cambridge English B2 First certified and have experience communicating in international work environments.
+
+Got an idea or a project? I'd love to connect.

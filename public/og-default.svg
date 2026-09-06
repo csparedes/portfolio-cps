@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title description">
+  <title id="title">Cristian Stalin Paredes Sánchez portfolio</title>
+  <desc id="description">Backend-focused Full Stack Engineer</desc>
+  <defs>
+    <linearGradient id="background" x1="0" x2="1" y1="0" y2="1">
+      <stop stop-color="#0f172a" />
+      <stop offset="1" stop-color="#0f766e" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#background)" />
+  <circle cx="1010" cy="120" r="220" fill="#2dd4bf" fill-opacity=".14" />
+  <text x="90" y="260" fill="#f8fafc" font-family="Arial, sans-serif" font-size="70" font-weight="700">Cristian Stalin Paredes Sánchez</text>
+  <text x="90" y="340" fill="#99f6e4" font-family="Arial, sans-serif" font-size="38">Backend-focused Full Stack Engineer</text>
+  <text x="90" y="410" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="28">Node.js · NestJS · Vue · Nuxt · PostgreSQL</text>
+</svg>

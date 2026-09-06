@@ -25,7 +25,7 @@
 
 <script setup lang="ts">
 const copyright = computed(() => {
-  return `© ${new Date().getFullYear()} Cristian Paredes Sánchez`
+  return `© ${new Date().getFullYear()} Cristian Stalin Paredes Sánchez`
 })
 
 const socialLinks = [

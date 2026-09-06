@@ -5,7 +5,7 @@ date: 2024-01-05
 author: "Mike TypeScript"
 tags: ["typescript", "vue", "best-practices", "development"]
 category: "guide"
-image: "/blog/typescript-vue.jpg"
+image: "/og-default.svg"
 draft: false
 ---
 
