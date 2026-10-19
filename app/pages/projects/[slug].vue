@@ -137,7 +137,7 @@ const { data: project, pending, error } = await useAsyncData(`projects-post-${sl
   try {
     const result = await queryCollection("projects").path(route.path).first()
 
-    if (!result) {
+    if (!result || result.draft) {
       throw createError({
         statusCode: 404,
         statusMessage: "Projects not found",
@@ -154,44 +154,7 @@ const { data: project, pending, error } = await useAsyncData(`projects-post-${sl
   }
 })
 
-interface GalleryImage {
-  src: string
-  alt: string
-}
-
-interface ProjectWithMaxImages {
-  maxImages?: number
-  title?: string
-  image?: string
-  [key: string]: unknown
-}
-
-const projectImages = computed<GalleryImage[]>(() => {
-  if (!project.value) return []
-
-  const p = project.value as ProjectWithMaxImages
-  const maxImages = p.maxImages || 1
-  const image = p.image
-  if (!image) return []
-
-  if (maxImages === 1) {
-    return [{
-      src: image,
-      alt: `${project.value.title} - Image 1`,
-    }]
-  }
-
-  const images: GalleryImage[] = []
-
-  for (let i = 1; i <= maxImages; i++) {
-    images.push({
-      src: `/projects/${slug}/${slug}-${i}.png`,
-      alt: `${project.value.title} - Image ${i}`,
-    })
-  }
-
-  return images
-})
+const projectImages = computed(() => project.value?.images ?? [])
 
 // Fetch adjacent posts for navigation
 const { data: adjacentProjects } = await useAsyncData(`adjacent-projects-${slug}`, async () => {
@@ -200,6 +163,7 @@ const { data: adjacentProjects } = await useAsyncData(`adjacent-projects-${slug}
 
     if (allPosts && allPosts.length > 0) {
       const projectsAdjacent = allPosts
+        .filter((p) => !p.draft)
         .map((p) => {
           const projectSlug = p.id.split("/").pop()?.replace(".md", "")
           return {

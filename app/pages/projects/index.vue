@@ -18,21 +18,21 @@
 
       
       <div class="flex flex-wrap gap-2">
-        <UButton :variant="selectedCategory === null ? 'solid' : 'outline'" @click="selectedCategory = null" size="sm">
+        <UButton :variant="selectedCategory === null ? 'solid' : 'outline'" @click="selectCategory()" size="sm">
           All Categories
         </UButton>
         <UButton v-for="category in availableCategories" :key="category"
-          :variant="selectedCategory === category ? 'solid' : 'outline'" @click="selectedCategory = category" size="sm">
+          :variant="selectedCategory === category ? 'solid' : 'outline'" @click="selectCategory(category)" size="sm">
           {{ category }}
         </UButton>
       </div>
 
       <div class="flex flex-wrap gap-2">
-        <UButton :variant="selectedTag === null ? 'solid' : 'outline'" @click="selectedTag = null" size="sm">
+        <UButton :variant="selectedTag === null ? 'solid' : 'outline'" @click="selectTag()" size="sm">
           All Tags
         </UButton>
         <UButton v-for="tag in availableTags" :key="tag" :variant="selectedTag === tag ? 'solid' : 'outline'"
-          @click="selectedTag = tag" size="sm">
+          @click="selectTag(tag)" size="sm">
           #{{ tag }}
         </UButton>
       </div>
@@ -115,8 +115,6 @@
 </template>
 
 <script lang="ts" setup>
-import type { Project } from "~/composables/types"
-
 const siteUrl = useEnvironment().siteUrl
 const pageUrl = `${siteUrl}/projects`
 const projectsTitle = "Projects - Development Portfolio"
@@ -138,11 +136,6 @@ useSeoMeta({
 })
 
 const constants = useConstants()
-const searchQuery = ref("")
-const selectedCategory = ref<string | null>(null)
-const selectedTag = ref<string | null>(null)
-const sortBy = ref("date-desc")
-const currentPage = ref(1)
 
 const { data: projects, pending, error } = await useAsyncData("projects-posts", async () => {
   try {
@@ -164,81 +157,25 @@ const { data: projects, pending, error } = await useAsyncData("projects-posts", 
   }
 })
 
-const availableCategories = computed(() => {
-  if (!projects.value) return []
-  const categories = projects.value.map((project) => project.category).filter(Boolean)
-  return [...new Set(categories)].sort()
-})
-
-const availableTags = computed(() => {
-  if (!projects.value) return []
-  const tags = projects.value.flatMap((project) => project.tags || [])
-  return [...new Set(tags)].sort()
-})
-
-const filteredPosts = computed(() => {
-  if (!projects.value) return []
-
-  let filtered = projects.value.filter(
-    (project) => project.title && !project.draft
-  )
-
-  if (searchQuery.value) {
-    const query = searchQuery.value.toLowerCase()
-    filtered = filtered.filter(
-      (project) =>
-        project.title?.toLowerCase().includes(query) ||
-        project.description?.toLowerCase().includes(query) ||
-        project.tags?.some((tag: string) => tag.toLowerCase().includes(query))
-    )
-  }
-
-  if (selectedCategory.value) {
-    filtered = filtered.filter((project) => project.category === selectedCategory.value)
-  }
-
-  if (selectedTag.value) {
-    const tag = selectedTag.value
-    filtered = filtered.filter((project) => project.tags?.includes(tag))
-  }
-
-  const sortFunctions = {
-    "date-desc": (a: Project, b: Project) =>
-      new Date(b.date).getTime() - new Date(a.date).getTime(),
-    "date-asc": (a: Project, b: Project) =>
-      new Date(a.date).getTime() - new Date(b.date).getTime(),
-    "title-asc": (a: Project, b: Project) => a.title.localeCompare(b.title),
-    "title-desc": (a: Project, b: Project) => b.title.localeCompare(a.title),
-  }
-
-  return filtered.sort(
-    sortFunctions[sortBy.value as keyof typeof sortFunctions] || (() => 0)
-  )
-})
-
-const totalPages = computed(() =>
-  Math.ceil(filteredPosts.value.length / constants.postsPerPage)
-)
-
-const paginatedPosts = computed(() => {
-  const start = (currentPage.value - 1) * constants.postsPerPage
-  const end = start + constants.postsPerPage
-  return filteredPosts.value.slice(start, end)
-})
+const contentItems = computed(() => projects.value ?? [])
+const {
+  searchQuery,
+  selectedCategory,
+  selectedTag,
+  sortBy,
+  currentPage,
+  availableCategories,
+  availableTags,
+  filteredItems: filteredPosts,
+  totalPages,
+  paginatedItems: paginatedPosts,
+  clearFilters,
+  selectCategory,
+  selectTag,
+} = useContentFiltering({ items: contentItems })
 
 const { formatDate } = useDateFormatter()
 
-const clearFilters = () => {
-  searchQuery.value = ""
-  selectedCategory.value = null
-  selectedTag.value = null
-  sortBy.value = "date-desc"
-  currentPage.value = 1
-}
-
-watch([searchQuery, selectedCategory, selectedTag, sortBy], () => {
-  currentPage.value = 1
-})
 </script>
 
 <style scoped>

@@ -1,4 +1,17 @@
-# Nuxt Minimal Starter
+# Cristian Paredes Portfolio
+
+Nuxt 4 portfolio backed by typed Nuxt Content collections.
+
+## Adding content
+
+- Copy `docs/templates/blog.md` to `content/blog/<slug>.md` for an article.
+- Copy `docs/templates/project.md` to `content/projects/<slug>.md` for a project.
+- Keep slugs and public asset folders in kebab-case.
+- Leave `draft: true` while editing; drafts are excluded from lists, direct routes, the homepage, and adjacent navigation.
+- Dates must use `YYYY-MM-DD`.
+- Blog categories are `demo`, `guide`, `learning`, `tips`, or `tutorial`.
+- Project categories are `Mobile App` or `Web App`; statuses are `deployed`, `in-development`, or `offline`.
+- Project galleries use the explicit `images` list. `image` is the listing and social-sharing cover.
 
 Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 

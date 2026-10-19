@@ -10,7 +10,7 @@ tags:
   - javascript
   - web-development
 category: tutorial
-image: /og-default.svg
+image: /og-blog.png
 draft: false
 ---
 

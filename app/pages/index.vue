@@ -91,6 +91,7 @@ const { data: projects } = await useAsyncData("homepage-projects", async () => {
     if (!result?.length) return []
 
     return result
+      .filter((project) => !project.draft)
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
       .slice(0, 6)
       .map((project) => {

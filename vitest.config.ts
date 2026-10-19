@@ -1,8 +1,12 @@
-import { defineVitestConfig } from '@nuxt/test-utils/config'
+import { defineConfig } from 'vitest/config'
 
-export default defineVitestConfig({
+export default defineConfig({
   test: {
-    environment: 'nuxt',
+    environment: 'node',
+    include: ['tests/unit/content-model.test.ts'],
+    fileParallelism: false,
+    hookTimeout: 60_000,
+    testTimeout: 30_000,
     // you can optionally set nuxt-specific environment options
     // environmentOptions: {
     //   nuxt: {

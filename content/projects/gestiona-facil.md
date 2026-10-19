@@ -7,6 +7,7 @@ tags: ["flutter", "nodejs", "express", "typescript", "mobile"]
 category: Mobile App
 status: offline
 image: /og-default.svg
+images: []
 ---
 
 # Gestiona Facil - Store Management Dashboard

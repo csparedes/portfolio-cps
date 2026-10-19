@@ -6,7 +6,21 @@ author: Cristian Paredes
 status: deployed
 category: Mobile App
 date: 2025-03-15
-maxImages: 7
+images:
+  - src: /projects/health-tracker-app/health-tracker-app-1.png
+    alt: Health Tracker main screen
+  - src: /projects/health-tracker-app/health-tracker-app-2.png
+    alt: Health Tracker measurement form
+  - src: /projects/health-tracker-app/health-tracker-app-3.png
+    alt: Health Tracker glucose history
+  - src: /projects/health-tracker-app/health-tracker-app-4.png
+    alt: Health Tracker waist history
+  - src: /projects/health-tracker-app/health-tracker-app-5.png
+    alt: Health Tracker weight history
+  - src: /projects/health-tracker-app/health-tracker-app-6.png
+    alt: Health Tracker statistics
+  - src: /projects/health-tracker-app/health-tracker-app-7.png
+    alt: Health Tracker settings
 tags:
   - flutter
   - dart

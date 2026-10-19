@@ -9,7 +9,7 @@ tags:
   - devops
   - ci-cd
 category: learning
-image: /og-default.svg
+image: /og-blog.png
 draft: false
 ---
 

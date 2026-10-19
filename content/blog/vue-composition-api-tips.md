@@ -5,7 +5,7 @@ date: 2024-01-10
 author: "Sarah Vue"
 tags: ["vue", "composition-api", "javascript", "frontend"]
 category: "tips"
-image: "/og-default.svg"
+image: /og-blog.png
 draft: false
 ---
 

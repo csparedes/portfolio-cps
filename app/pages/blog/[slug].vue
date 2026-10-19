@@ -127,7 +127,7 @@ const { data: post, pending, error } = await useAsyncData(`blog-post-${slug}`, a
   try {
     const result = await queryCollection("blog").path(route.path).first()
 
-    if (!result) {
+    if (!result || result.draft) {
       throw createError({
         statusCode: 404,
         statusMessage: "Post not found",
@@ -150,6 +150,7 @@ const { data: adjacentPosts } = await useAsyncData(`adjacent-posts-${slug}`, asy
 
     if (allPosts && allPosts.length > 0) {
       const blogPosts = allPosts
+        .filter((p) => !p.draft)
         .map((p) => {
           const postSlug = p.id.split("/").pop()?.replace(".md", "")
           return {

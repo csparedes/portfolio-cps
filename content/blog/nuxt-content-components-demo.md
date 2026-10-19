@@ -9,7 +9,7 @@ tags:
   - components
   - demo
 category: demo
-image: /og-default.svg
+image: /og-blog.png
 draft: false
 ---
 

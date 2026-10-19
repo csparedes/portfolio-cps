@@ -1,13 +1,12 @@
 export interface ContentItem {
   _path?: string
-  title?: string
-  description?: string
-  date?: string
-  tags?: string[]
+  title: string
+  description: string
+  date: string
+  tags: string[]
   category?: string
   author?: string
   draft?: boolean
-  [key: string]: unknown
 }
 
 export interface UseContentFilteringOptions {
@@ -27,7 +26,9 @@ export const useContentFiltering = (options: UseContentFilteringOptions) => {
 
   const availableCategories = computed(() => {
     if (!items.value) return []
-    const categories = items.value.map((item) => item.category).filter(Boolean)
+    const categories = items.value
+      .map((item) => item.category)
+      .filter((category): category is string => Boolean(category))
     return [...new Set(categories)].sort()
   })
 
@@ -97,6 +98,14 @@ export const useContentFiltering = (options: UseContentFilteringOptions) => {
     currentPage.value = 1
   }
 
+  const selectCategory = (category?: string) => {
+    selectedCategory.value = category ?? null
+  }
+
+  const selectTag = (tag?: string) => {
+    selectedTag.value = tag ?? null
+  }
+
   watch([searchQuery, selectedCategory, selectedTag, sortBy], () => {
     currentPage.value = 1
   })
@@ -114,5 +123,7 @@ export const useContentFiltering = (options: UseContentFilteringOptions) => {
     totalPages,
     paginatedItems,
     clearFilters,
+    selectCategory,
+    selectTag,
   }
 }

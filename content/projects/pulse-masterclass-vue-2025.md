@@ -12,8 +12,11 @@ description: Full-featured task and project management app with Vue 3, Pinia, Su
 image: /projects/pulse-masterclass-vue-2025/pulse-masterclass-vue-2025-1.png
 author: Cristian Paredes
 status: deployed
-category: Web app
+category: Web App
 date: 2025-12-13
+images:
+  - src: /projects/pulse-masterclass-vue-2025/pulse-masterclass-vue-2025-1.png
+    alt: Pulse project management dashboard
 ---
 
 # Pulse - Vue.js Masterclass 2025

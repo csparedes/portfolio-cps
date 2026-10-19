@@ -5,7 +5,7 @@ date: 2024-01-20
 author: "Cristian Paredes"
 tags: ["performance", "optimization", "web-development", "javascript"]
 category: "guide"
-image: /og-default.svg
+image: /og-blog.png
 draft: false
 ---
 

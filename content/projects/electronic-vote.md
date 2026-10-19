@@ -6,6 +6,9 @@ author: Cristian Paredes
 status: in-development
 category: Web App
 date: 2025-06-15
+images:
+  - src: /projects/electronic-vote/electronic-vote-1.png
+    alt: Electronic Vote administration screen
 tags:
   - nuxt
   - nuxt-ui

@@ -21,6 +21,12 @@ export interface Project {
   image?: string
   draft?: boolean
   status?: string
+  images: GalleryImage[]
+}
+
+export interface GalleryImage {
+  src: string
+  alt: string
 }
 
 export interface AdjacentPost {
